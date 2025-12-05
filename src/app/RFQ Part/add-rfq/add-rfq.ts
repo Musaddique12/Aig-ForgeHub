@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -27,7 +27,8 @@ export class AddRfq implements OnInit {
     private rfqService:RfqSerVice,
     private rfqItemsService:RfqItemsService,
     private rfqVendorService:RfqVendorService,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private cd:ChangeDetectorRef
   ){}
 
   rfqId:any = null;           
@@ -81,7 +82,39 @@ export class AddRfq implements OnInit {
   loadItems(){
     this.itemService.getFiltered({}).subscribe((res:any)=>{
       this.itemsList = res.data.items;
+      this.getItems();
+    }
+  )
+  }
+
+    uom: any[] = [];
+  data: any;
+  query = {}
+  getItems() {
+    this.itemService.getFiltered(this.query).subscribe({
+      next: (res: any) => {
+        this.data = res.data.items
+        console.log(this.data);
+        this.fetching_Uom()
+      },
+      error: (err) => {
+        console.log("Error", err);
+       alert("Failed");
+      }
     })
+  }
+
+  fetching_Uom() {
+    if (!this.data) return;
+
+    for (let item of this.data) {
+      if (!this.uom.includes(item.uom)) {
+        console.log(item.uom)
+        this.uom.push(item.uom);
+      }
+    }
+    console.log(this.uom)
+     this.cd.detectChanges();
   }
 
   // 🔽 STEP1: Save RFQ
@@ -121,6 +154,8 @@ export class AddRfq implements OnInit {
       });
     }
   }
+
+  
 
   // 🔽 STEP2: Add RFQ Item
   addItem(){

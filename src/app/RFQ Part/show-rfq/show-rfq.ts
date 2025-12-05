@@ -16,7 +16,7 @@ export class ShowRfq implements OnInit{
   constructor(private rfqService:RfqSerVice, private router:Router , private cd:ChangeDetectorRef){}
 
   rfqs:any[]=[];
-  query = { pageNumber:1, pageSize:20, title:"", status:"", factoryCode:"" }
+  query = { pageNumber:1, pageSize:20, title:"", status:"", factoryCode:"", SearchAny:"" }
   totalVendors:any=0;
 
   ngOnInit(){

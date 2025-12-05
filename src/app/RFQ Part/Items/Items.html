@@ -14,10 +14,10 @@
 </select>
 
 <!--  Adding UOM option fro items table  -->
-UOM<select name="" id="">
-  <option value="">Custom</option>
-  
-  <option value=""></option>
+<select [(ngModel)]="query.uom" (change)="getItems()">
+    <option value="">Select UOM</option>
+    <option>custom</option>
+    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
 </select>
 
 

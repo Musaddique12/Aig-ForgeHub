@@ -34,7 +34,13 @@
   <input placeholder="Item No" [(ngModel)]="itemForm.value.itemNo"><br>
   <input placeholder="Item Name" [(ngModel)]="itemForm.value.itemName"><br>
   <input placeholder="Description" [(ngModel)]="itemForm.value.description"><br>
-  <input placeholder="UOM" [(ngModel)]="itemForm.value.uom"><br>
+
+  <select [(ngModel)]="itemForm.value.uom" (change)="getItems()">
+    <option value="">Select UOM</option>
+    <option>custom</option>
+    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
+</select>
+
   <input type="number" placeholder="Quantity" [(ngModel)]="itemForm.value.quantity"><br>
   <input placeholder="Specifications" [(ngModel)]="itemForm.value.specifications"><br>
   <input type="number" placeholder="Estimated Price" [(ngModel)]="itemForm.value.estimatedPrice"><br>

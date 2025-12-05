@@ -24,7 +24,13 @@ PageSize  <select [(ngModel)]="query.pageSize" (change)="getItems()">
   <input placeholder="Item Name" [(ngModel)]="newItem.itemName">
   <input placeholder="Description" [(ngModel)]="newItem.description">
   <input placeholder="Quantity" type="number" [(ngModel)]="newItem.quantity">
-  <input placeholder="UOM" [(ngModel)]="newItem.uom">
+
+  <select [(ngModel)]="newItem.uom">
+    <option value="">Select UOM</option>
+    <option>custom</option>
+    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
+</select>
+
   <input placeholder="Specifications" [(ngModel)]="newItem.specifications">
   <input placeholder="Price" type="number" [(ngModel)]="newItem.estimatedPrice">
   <input type="date" [(ngModel)]="newItem.requiredDeliveryDate">
@@ -36,6 +42,9 @@ PageSize  <select [(ngModel)]="query.pageSize" (change)="getItems()">
 <hr>
 
 <!-- ITEM LIST WITH EDIT/DELETE -->
+
+  <input placeholder="Search Anything" [(ngModel)]="query.searchAny" (input)="getItems()">
+
 <div *ngFor="let i of items" class="card">
 
   <!-- VIEW -->

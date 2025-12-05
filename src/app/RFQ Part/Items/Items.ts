@@ -41,6 +41,7 @@ getItems() {
       this.query.pageNumber = res.data.pageNumber;
       this.totalItems = res.data.totalCount;
       console.log(res);
+      this.fetching_Uom();
       this.cd.detectChanges();
     },
     error: (err) => console.log(err)
@@ -79,5 +80,20 @@ Delete(id:any){
     }
   });
 }
+
+ uom: any[] = [];
+
+  fetching_Uom() {
+    if (!this.items) return;
+
+    for (let item of this.items) {
+      if (!this.uom.includes(item.uom)) {
+        console.log(item.uom)
+        this.uom.push(item.uom);
+      }
+    }
+    console.log(this.uom)
+     this.cd.detectChanges();
+  }
 
 }

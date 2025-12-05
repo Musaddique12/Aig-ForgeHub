@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../../../Services/Items';
@@ -24,10 +24,11 @@ export class UpdateItems implements OnInit {
     isActive:true
   };
 
-  constructor(private route:ActivatedRoute, private service:ItemService) {}
+  constructor(private route:ActivatedRoute, private service:ItemService , private cd:ChangeDetectorRef) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.getItems();
     this.loadItem();
   }
 
@@ -50,4 +51,36 @@ export class UpdateItems implements OnInit {
       }
     })
   }
+
+
+  uom: any[] = [];
+  data: any;
+  query = {}
+  getItems() {
+    this.service.getFiltered(this.query).subscribe({
+      next: (res: any) => {
+        this.data = res.data.items
+        console.log(this.data);
+        this.fetching_Uom()
+      },
+      error: (err) => {
+        console.log("Error", err);
+       alert("Failed");
+      }
+    })
+  }
+
+  fetching_Uom() {
+    if (!this.data) return;
+
+    for (let item of this.data) {
+      if (!this.uom.includes(item.uom)) {
+        console.log(item.uom)
+        this.uom.push(item.uom);
+      }
+    }
+    console.log(this.uom)
+     this.cd.detectChanges();
+  }
+
 }

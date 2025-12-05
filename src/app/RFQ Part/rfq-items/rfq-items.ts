@@ -51,8 +51,8 @@ export class RfqItems implements OnInit {
   query={
     rfqId:"",
     pageNumber:1,
-    pageSize:10
-    // searcAny
+    pageSize:10,
+    searchAny:""
   }
 
   ngOnInit(){
@@ -70,15 +70,35 @@ export class RfqItems implements OnInit {
       this.items = res?.data?.items ?? [];
       this.totalItems = res?.data?.totalCount ?? 0;
       this.cd.detectChanges();
+      console.log("loading items " ,  this.query.searchAny)
     });
   }
 
+  
   // LOAD ALL ITEMS FOR DROPDOWN
   loadItemDropdown(){
     this.itemService.getFiltered({}).subscribe((res:any)=>{
       this.itemList = res.data.items;
+            this.fetching_Uom();  
+
     });
   }
+
+  //fethcing Uom dropdown 
+  uom: any[] = [];
+fetching_Uom() {
+    if (!this.itemList) return;
+console.log(this.itemList)
+    for (let item of this.itemList) {
+      if (!this.uom.includes(item.uom)) {
+        this.uom.push(item.uom);
+      }
+    }
+    console.log(this.uom)
+     this.cd.detectChanges();
+  }
+
+
 
   // WHEN SELECT ITEM FROM DROPDOWN
   onItemSelect(id:any){

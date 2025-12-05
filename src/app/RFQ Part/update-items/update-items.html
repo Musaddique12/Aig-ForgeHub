@@ -3,7 +3,13 @@
 <input placeholder="Name" [(ngModel)]="item.name"><br>
 <input placeholder="Description" [(ngModel)]="item.description"><br>
 <input placeholder="Category Json" [(ngModel)]="item.categoryJson"><br>
-<input placeholder="UOM" [(ngModel)]="item.uom"><br>
+
+<select [(ngModel)]="item.uom" (change)="getItems()">
+    <option value="">Select UOM</option>
+    <option>custom</option>
+    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
+</select>
+
 <input placeholder="Specifications" [(ngModel)]="item.specifications"><br>
 <input placeholder="Tolerance Json" [(ngModel)]="item.toleranceJson"><br>
 

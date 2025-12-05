@@ -2,8 +2,8 @@
 
 <!-- Filters -->
 <div class="filter-box">
-  <input type="text" placeholder="Search Title" [(ngModel)]="query.title">
-  
+  <!-- <input type="text" placeholder="Search Title" [(ngModel)]="query.title"> -->
+    <input type="text" placeholder="Search Title" [(ngModel)]="query.SearchAny" (input)="loadRfqs()">
   <select [(ngModel)]="query.status">
     <option value="">All Status</option>
     <option value="draft">Draft</option>
@@ -11,7 +11,7 @@
     <option value="closed">Closed</option>
   </select>
 
-  <input type="text" placeholder="Factory Code" [(ngModel)]="query.factoryCode">
+  <!-- <input type="text" placeholder="Factory Code" [(ngModel)]="query.factoryCode"> -->
 
   <button (click)="loadRfqs()">Search</button>
 
@@ -28,7 +28,6 @@
 
 <!-- List -->
 <div *ngIf="rfqs.length==0">No RFQs Found</div>
-
 <div *ngFor="let r of rfqs" class="rfq-card">
 
   <p><b>{{r.rfqNumber}}</b> - {{r.title}}</p>
