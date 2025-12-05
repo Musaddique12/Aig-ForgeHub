@@ -1,0 +1,35 @@
+<h2>Edit RFQ</h2>
+
+<form [formGroup]="rfqForm">
+<mat-horizontal-stepper>
+
+<!-- Step-1 RFQ Details -->
+<mat-step label="RFQ Details">
+  <input formControlName="rfqNumber" placeholder="RFQ Number">
+  <input formControlName="title" placeholder="Title">
+  <textarea formControlName="description" placeholder="Description"></textarea>
+  <input formControlName="status" placeholder="Status">
+  <input type="date" formControlName="submissionDeadline">
+  <input formControlName="factoryCode" placeholder="Factory Code">
+  <input formControlName="currencyJson" placeholder="Currency JSON">
+  <input type="number" formControlName="totalEstimatedValue" placeholder="Value">
+
+  <button mat-button matStepperNext>Next</button>
+</mat-step>
+
+<!-- Step-2 RFQ Items -->
+<mat-step label="RFQ Items">
+  <button (click)="router.navigate(['/rfq-items',rfqId])">Manage Items</button>
+  <p>You will add, update, delete items on next page</p>
+  <button mat-button matStepperNext>Next</button>
+</mat-step>
+
+<!-- Step-3 Vendors -->
+<mat-step label="Vendors">
+  <button (click)="router.navigate(['/rfq-vendors',rfqId])">Manage Vendors</button>
+  <p>You will add, update, delete vendors on next page</p>
+  <button mat-button color="primary" (click)="updateRfq()">Save Changes</button>
+</mat-step>
+
+</mat-horizontal-stepper>
+</form>

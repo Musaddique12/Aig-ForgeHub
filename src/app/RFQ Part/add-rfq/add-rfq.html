@@ -1,0 +1,66 @@
+<h2>Add New RFQ</h2>
+
+<mat-horizontal-stepper>
+
+<!-- ───────────────── STEP-1 RFQ ───────────────── -->
+<mat-step>
+  <h3>RFQ Details</h3>
+
+  <input placeholder="RFQ Number" [(ngModel)]="rfqForm.value.rfqNumber"><br>
+  <input placeholder="Title" [(ngModel)]="rfqForm.value.title"><br>
+  <input placeholder="Description" [(ngModel)]="rfqForm.value.description"><br>
+  <input placeholder="Status" [(ngModel)]="rfqForm.value.status"><br>
+  <input type="date" [(ngModel)]="rfqForm.value.submissionDeadline"><br>
+  <input placeholder="Factory Code" [(ngModel)]="rfqForm.value.factoryCode"><br>
+  <input placeholder="Currency Json" [(ngModel)]="rfqForm.value.currencyJson"><br>
+  <input type="number" placeholder="Total Estimated Value" [(ngModel)]="rfqForm.value.totalEstimatedValue"><br><br>
+
+  <button mat-button color="primary" (click)="saveRfq()">Save RFQ</button>
+  <button mat-button matStepperNext>Next</button>
+</mat-step>
+
+
+<!-- ───────────────── STEP-2 ITEMS ───────────────── -->
+<mat-step>
+  <h3>Add RFQ Item</h3>
+
+  <select [(ngModel)]="itemForm.controls['itemId'].value" (change)="onItemSelect($event)">
+    <option value="">-- Select Item --</option>
+    <option *ngFor="let i of itemsList" [value]="i.id">
+      {{i.name}} - {{i.itemCode}}  <!-- display text -->
+    </option>
+  </select><br><br>
+
+  <input placeholder="Item No" [(ngModel)]="itemForm.value.itemNo"><br>
+  <input placeholder="Item Name" [(ngModel)]="itemForm.value.itemName"><br>
+  <input placeholder="Description" [(ngModel)]="itemForm.value.description"><br>
+  <input placeholder="UOM" [(ngModel)]="itemForm.value.uom"><br>
+  <input type="number" placeholder="Quantity" [(ngModel)]="itemForm.value.quantity"><br>
+  <input placeholder="Specifications" [(ngModel)]="itemForm.value.specifications"><br>
+  <input type="number" placeholder="Estimated Price" [(ngModel)]="itemForm.value.estimatedPrice"><br>
+  <input type="date" [(ngModel)]="itemForm.value.requiredDeliveryDate"><br>
+  <input placeholder="Indent Line No" [(ngModel)]="itemForm.value.indentLineNo"><br><br>
+
+  <button mat-button (click)="addItem()">Add Item</button>
+  <button mat-button matStepperNext>Next</button>
+</mat-step>
+
+
+<!-- ───────────────── STEP-3 VENDOR ───────────────── -->
+<mat-step>
+  <h3>Add Vendor</h3>
+
+  <select [(ngModel)]="vendorForm.value.vendorId">
+    <option value="">-- Select Vendor (Example) --</option>
+    <option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor A</option>
+    <option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor B</option>
+  </select><br><br>
+
+  <input placeholder="Status" [(ngModel)]="vendorForm.value.status"><br>
+  <input type="datetime-local" [(ngModel)]="vendorForm.value.allowedUntil"><br><br>
+
+  <button mat-button (click)="addVendor()">Add Vendor</button>
+  <button mat-button>Finish</button>
+</mat-step>
+
+</mat-horizontal-stepper>

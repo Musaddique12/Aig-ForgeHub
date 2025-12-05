@@ -1,0 +1,48 @@
+<p>Filter Items</p>
+
+<!-- <input type="text" placeholder="Search Name" [(ngModel)]="query.name" (input)="getItems()">
+<input type="text" placeholder="Item Code" [(ngModel)]="query.itemCode">
+<input type="text" placeholder="UOM" [(ngModel)]="query.uom"> -->
+
+<input type="text" placeholder="Search Anythign" [(ngModel)]="query.SearchAny" (input)="getItems()">
+
+
+<select [(ngModel)]="query.isActive" (change)="getItems()">
+  <option [ngValue]="null">All</option>
+  <option [ngValue]="true">Active</option>
+  <option [ngValue]="false">Inactive</option>
+</select>
+
+<!--  Adding UOM option fro items table  -->
+UOM<select name="" id="">
+  <option value="">Custom</option>
+  
+  <option value=""></option>
+</select>
+
+
+<!-- <button (click)="getItems()">Apply Filter</button> -->
+
+<p> Total Items : {{totalItems}}</p>
+PageSize  <select [(ngModel)]="query.pageSize" (change)="getItems()">
+    <option value="2">2</option>
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="20">20</option>
+</select>
+
+<hr>
+
+<p *ngFor="let i of items">
+ item Code {{i.itemCode}} <br/>
+ Name : {{i.name}} <br/>
+ description : {{i.description}} <br/>
+ UOM : {{i.uom}} <br/>
+<button (click)="update(i.id)">Update</button>
+<button (click)="Delete(i.id)">Delete</button>
+</p>
+
+
+<button (click)="previous()">Previous</button>
+<p>Page: {{query.pageNumber}}</p>
+<button (click)="next()">Next</button>

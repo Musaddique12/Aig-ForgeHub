@@ -1,0 +1,26 @@
+<p>rfq works!</p>
+
+<input type="text" placeholder="Title" [(ngModel)]="query.Title" (input)="getData()">
+<!-- <input type="text" placeholder="Search Rfq" [(ngModel)]="query.itemName" (input)="getRfqItems()"> -->
+
+<select [(ngModel)]="query.Status" (change)="getData()">
+    <option [ngValue]="null">All</option>
+    <option [ngValue]="'draft'">Draft</option>
+    <option [ngValue]="'published'">Published</option>
+    <option [ngValue]="'closed'">Closed</option>
+    <option [ngValue]="'cancelled'">Cancelled</option>
+    <option [ngValue]="'expired'">Expired</option>
+    <option [ngValue]="'rejected'">Rejected</option>
+</select>
+
+<input type="text" placeholder="Factory Code" [(ngModel)]="query.FactoryCode" (input)="getData()">
+
+<!-- <button (click)="getData()">Apply Filter</button> -->
+
+<p *ngFor="let x of items">
+  {{x.id}}-{{ x.rfqNumber }} - {{ x.title }} - {{ x.factoryCode }} - {{ x.description }} - {{ x.status }}
+</p>
+
+<p>Page: {{query.PageNumber}}</p>
+<button (click)="previousPage()">Previous</button>
+<button (click)="nextPage()">Next</button>

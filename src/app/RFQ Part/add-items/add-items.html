@@ -1,0 +1,16 @@
+<p>Add Item Form</p>
+
+<input placeholder="Item Code" [(ngModel)]="item.itemCode"><br>
+<input placeholder="Name" [(ngModel)]="item.name"><br>
+<input placeholder="Description" [(ngModel)]="item.description"><br>
+<input placeholder="Category JSON" [(ngModel)]="item.categoryJson"><br>
+<input placeholder="UOM" [(ngModel)]="item.uom"><br>
+<input placeholder="Specifications" [(ngModel)]="item.specifications"><br>
+<input placeholder="Tolerance JSON" [(ngModel)]="item.toleranceJson"><br>
+
+<select [(ngModel)]="item.isActive">
+    <option [ngValue]="true">Active</option>
+    <option [ngValue]="false">Inactive</option>
+</select><br><br>
+
+<button (click)="submit()">Save</button>

@@ -1,0 +1,16 @@
+<p>second works!</p>
+
+<input type="color" #val>
+<input type="submit" (click)="chengerClr(val.value)">
+
+<h1 [style.color]="selectedColor">Hellow Masstec Employee</h1>
+
+<!-- 2 way data binding -->
+ <input type="number" [(ngModel)]="firstNumber">
+ <input type="number" [(ngModel)]="seconNumber">
+ {{add()}}
+ <h2>Addition is {{res}}</h2>
+
+ <!-- COnditional rendering -->
+  <h1 [style]="v?'red':'blue'">COnditinal bndingin</h1>
+    <button (click)="v=!v">Toggle</button>

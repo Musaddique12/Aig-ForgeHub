@@ -1,0 +1,15 @@
+<p>Update Item</p>
+
+<input placeholder="Name" [(ngModel)]="item.name"><br>
+<input placeholder="Description" [(ngModel)]="item.description"><br>
+<input placeholder="Category Json" [(ngModel)]="item.categoryJson"><br>
+<input placeholder="UOM" [(ngModel)]="item.uom"><br>
+<input placeholder="Specifications" [(ngModel)]="item.specifications"><br>
+<input placeholder="Tolerance Json" [(ngModel)]="item.toleranceJson"><br>
+
+<select [(ngModel)]="item.isActive">
+    <option [ngValue]="true">Active</option>
+    <option [ngValue]="false">Inactive</option>
+</select><br><br>
+
+<button (click)="update()">Update</button>

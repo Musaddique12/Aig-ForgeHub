@@ -1,0 +1,75 @@
+<h2>Vendors for RFQ</h2>
+
+<!-- ADD NEW VENDOR -->
+<div class="box">
+  <h3>Add Vendor</h3>
+
+  <select [(ngModel)]="newVendor.vendorId">
+    <option value="">Select Vendor</option>
+    <option *ngFor="let v of sampleVendors" [value]="v.id">
+      {{v.name}} - {{v.id | slice:0:6}}...
+    </option>
+  </select>
+
+  <!-- Manual ENUM Dropdown -->
+  <select [(ngModel)]="newVendor.status">
+    <option value="invited">invited</option>
+    <option value="viewed">viewed</option>
+    <option value="bid_submitted">bid_submitted</option>
+    <option value="selected">selected</option>
+    <option value="rejected">rejected</option>
+  </select>
+
+
+  <input [(ngModel)]="newVendor.allowedUntil" type="datetime-local">
+  <button (click)="addVendor()">Add Vendor</button>
+</div>
+
+<hr>
+
+<!-- VENDOR LIST -->
+<p>Total Vendors : {{totalVendors}}</p>
+
+ <select [(ngModel)]="pageSize" (change)="loadVendors()">
+    <option [ngValue]="2">2</option>
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+  <select [(ngModel)]="status" (change)="loadVendors()">
+    <option [ngValue]="'invited'">Invited</option>
+    <option [ngValue]="'viewed'">Viewed</option>
+    <option [ngValue]="'bid_submitted'">Bid Submitted</option>
+    <option [ngValue]="'selected'">Selected</option>
+        <option [ngValue]="'rejected'">Rejected</option>
+  </select>
+
+<div *ngFor="let v of vendors" class="card">
+
+ 
+  <!-- VIEW MODE -->
+  <div *ngIf="editModeId!==v.id">
+    <p><b>{{v.vendorId}}</b></p>
+    <p>Status: {{v.status}}</p>
+
+    <p>Allowed Until: {{v.allowedUntil | date:'short'}}</p>
+
+    <button (click)="startEdit(v)">Edit</button>
+    <button (click)="deleteVendor(v.id)">Delete</button>
+  </div>
+
+  <!-- EDIT MODE -->
+  <div *ngIf="editModeId===v.id">
+    <input [(ngModel)]="editVendor.status" placeholder="Status">
+    <input [(ngModel)]="editVendor.allowedUntil" type="datetime-local">
+    <button (click)="saveEdit()">Save</button>
+    <button (click)="cancelEdit()">Cancel</button>
+  </div>
+
+  
+</div>
+
+<button (click)="prev()">Prev</button>
+  <p>Page Number : {{pagenumber}}</p>
+  <button (click)="next()">Next</button>
