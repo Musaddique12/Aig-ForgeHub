@@ -6,11 +6,22 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RfqSerVice } from '../../../Services/RfqSerVice';
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+
 
 @Component({
   selector:'app-edit-rfq',
   standalone:true,
-  imports:[CommonModule,FormsModule,ReactiveFormsModule,MatStepperModule,MatInputModule,MatButtonModule],
+ imports:[
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatStepperModule,
+  MatButtonModule,
+  ReactiveFormsModule,
+  CommonModule
+],
   templateUrl:'./edit-rfq.html',
   styleUrls:['./edit-rfq.scss']
 })

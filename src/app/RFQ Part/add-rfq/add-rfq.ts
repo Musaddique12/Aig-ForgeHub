@@ -2,20 +2,33 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+
 
 import { RfqSerVice } from '../../../Services/RfqSerVice';
 import { RfqItemsService } from '../../../Services/rfq-items-service';
 import { RfqVendorService } from '../../../Services/rfq-vendor-service';
 import { ItemService } from '../../../Services/Items';  // ITEM SERVICE
 
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-add-rfq',
   standalone: true,
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
-    MatStepperModule, MatInputModule, MatButtonModule
+    MatStepperModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatSnackBarModule
   ],
   templateUrl: './add-rfq.html',
   styleUrls:['./add-rfq.scss']
@@ -28,7 +41,8 @@ export class AddRfq implements OnInit {
     private rfqItemsService:RfqItemsService,
     private rfqVendorService:RfqVendorService,
     private itemService: ItemService,
-    private cd:ChangeDetectorRef
+    private cd:ChangeDetectorRef,
+    private snack: MatSnackBar
   ){}
 
   rfqId:any = null;           
@@ -131,8 +145,13 @@ export class AddRfq implements OnInit {
 
     this.rfqService.addRfq(body).subscribe({
       next:(res:any)=>{
-        alert("RFQ Created Successfully");
+        // alert("RFQ Created Successfully");
         this.rfqId = res?.data?.id;
+          this.snack.open("RFQ Saved Successfully ✔","Close",{
+    duration:2500,
+    panelClass:"success-snack"
+  });
+
       },
       error:(err)=>console.log("RFQ ERR:",err.error.errors)
     })
@@ -171,7 +190,12 @@ export class AddRfq implements OnInit {
     // RequiredDeliveryDate must stay as YYYY-MM-DD
 
     this.rfqItemsService.addRfqItems(body).subscribe({
-      next:(res)=>{ alert("Item Added"); },
+      next:(res)=>{ 
+         this.snack.open("Item Added to RFQ ✔","Close",{
+    duration:2500,
+    panelClass:"info-snack"
+  });
+       },
       error:(err)=>console.log("ITEM ERR:",err.error.errors)
     })
   }
@@ -189,7 +213,14 @@ export class AddRfq implements OnInit {
     }
 
     this.rfqVendorService.addRfqVendors(body).subscribe({
-      next:(res)=>alert("Vendor Added"),
+      next:(res)=>{
+         this.snack.open("Vendor Added Successfully ✔","Close",{
+    duration:2500,
+    panelClass:"success-snack"
+  });
+      }
+      ,
+      
       error:(err)=>console.log("VENDOR ERR:",err.error.errors)
     })
   }

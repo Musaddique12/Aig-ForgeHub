@@ -1,0 +1,142 @@
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #263238;
+}
+
+/* ---------------- FILTER UI ---------------- */
+.filter-card {
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 15px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.view-toggle button[disabled]{
+  background:#1976d2 !important;
+  color:#fff !important;
+}
+
+/* ---------------- CARD VIEW ---------------- */
+.list-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:15px;
+}
+
+.rfq-card{
+  padding:14px;
+  border-radius:10px;
+  transition:0.25s ease;
+  border-left:5px solid #1976d2;
+}
+
+.rfq-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+}
+
+.rfq-header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.rfq-number{
+  font-size:17px;
+  font-weight:700;
+  color:#0d47a1;
+}
+
+.rfq-title{
+  font-size:15px;
+  font-weight:600;
+  color:#37474f;
+}
+
+.details{
+  color:#455a64;
+  margin-bottom:10px;
+}
+
+/* STATUS BADGES */
+.status-badge{
+  padding: 4px 10px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.status-draft{ background:#fff3cd; color:#b58900; }
+.status-published{ background:#d4edda; color:#1b5e20; }
+.status-closed{ background:#f8d7da; color:#b71c1c; }
+
+/* ACTION BUTTONS */
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:8px;
+}
+
+/* ---------------- TABLE VIEW ---------------- */
+.table{
+  width:100%;
+  margin-top:15px;
+}
+
+.table th{
+  font-weight:700;
+  background:#e3f2fd;
+}
+
+.table tr:hover{
+  background:#f1f8ff;
+}
+
+/* EMPTY DATA */
+.no-data{
+  text-align:center;
+  padding:25px;
+  font-size:18px;
+  color:#757575;
+}
+
+
+/* ---------- SUMMARY CARD ---------- */
+.summary-box{
+  width:120px;
+  background:#1976d2;
+  color:#fff;
+  padding:2px;
+  border-radius:10px;
+  text-align:center;
+  margin-bottom:10px;
+  transition:0.3s;
+}
+
+.summary-box:hover{
+  transform:scale(1.05);
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+
+.summary-value{
+  font-size:26px;
+  font-weight:700;
+}
+
+.summary-label{
+  font-size:14px;
+  opacity:0.9;
+  font-weight:500;
+}

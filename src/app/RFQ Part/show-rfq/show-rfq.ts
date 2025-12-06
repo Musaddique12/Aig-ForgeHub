@@ -1,13 +1,31 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { RfqSerVice } from '../../../Services/RfqSerVice';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector:'app-show-rfq',
   standalone:true,
-  imports:[CommonModule, FormsModule],
+  imports:[ CommonModule,
+  FormsModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
+  MatTableModule,
+  MatButtonModule,
+  MatIconModule,
+  MatPaginatorModule],
   templateUrl:'./show-rfq.html',
   styleUrls:['./show-rfq.scss']
 })
@@ -15,9 +33,14 @@ export class ShowRfq implements OnInit{
 
   constructor(private rfqService:RfqSerVice, private router:Router , private cd:ChangeDetectorRef){}
 
+// for setting the layout method in the html toggle between card to table
+  viewMode:'card'|'table' = 'card';  
+  displayedColumns:string[]=['rfqNumber','title','status','factoryCode','actions'];
+
+
   rfqs:any[]=[];
   query = { pageNumber:1, pageSize:20, title:"", status:"", factoryCode:"", SearchAny:"" }
-  totalVendors:any=0;
+  totalRfqs:any=0;
 
   ngOnInit(){
     this.loadRfqs();
@@ -26,7 +49,7 @@ export class ShowRfq implements OnInit{
   loadRfqs(){
     this.rfqService.getRfq(this.query).subscribe((res:any)=>{
       this.rfqs = res?.data?.items ?? res?.data ?? [];
-      this.totalVendors = res?.data?.totalCount;
+      this.totalRfqs = res?.data?.totalCount;
       console.log("RFQ List:",this.rfqs);
       this.cd.detectChanges();
     })
@@ -56,10 +79,20 @@ export class ShowRfq implements OnInit{
   }
 }
  next(){
-  let totalPages = Math.ceil(this.totalVendors / this.query.pageSize);
+  let totalPages = Math.ceil(this.totalRfqs / this.query.pageSize);
   if(this.query.pageNumber < totalPages){
     this.query.pageNumber++;
     this.loadRfqs();
   }
 }
+
+
+
+// Materal built in pagination fiuntion 
+
+onPageChange(event: PageEvent){
+    this.query.pageNumber = event.pageIndex + 1;
+    this.query.pageSize = event.pageSize;
+    this.loadRfqs();
+  }
 }

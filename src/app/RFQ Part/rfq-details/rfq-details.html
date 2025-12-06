@@ -1,16 +1,32 @@
-<h2>RFQ Details</h2>
-<div class="rfq-box">
+<h2 class="page-title">RFQ Details</h2>
 
-  <p><b>RFQ Number:</b> {{rfq.rfqNumber}}</p>
-  <p><b>Title:</b> {{rfq.title}}</p>
-  <p><b>Status:</b> {{rfq.status}}</p>
-  <p><b>Deadline:</b> {{rfq.submissionDeadline | date:'mediumDate'}}</p>
-  <p><b>Factory:</b> {{rfq.factoryCode}}</p>
-  <p><b>Total Estimated Value:</b> {{rfq.totalEstimatedValue}}</p>
-  <p><b>Description:</b> {{rfq.description}}</p>
+<mat-card class="rfq-detail-card mat-elevation-z4">
 
-  <button (click)="goToItems()">View Items</button>
-  <button (click)="goToVendors()">View Vendors</button>
-  <button (click)="editRfq()">Edit RFQ</button>
+  <div class="details-grid">
+    
+    <div><span>RFQ Number</span><p>{{rfq.rfqNumber}}</p></div>
+    <div><span>Title</span><p>{{rfq.title}}</p></div>
 
-</div>
+    <div>
+      <span>Status</span>
+      <p>
+        <span class="status-badge status-{{rfq.status}}">
+          {{rfq.status | titlecase}}
+        </span>
+      </p>
+    </div>
+
+    <div><span>Deadline</span><p>{{rfq.submissionDeadline | date:'mediumDate'}}</p></div>
+    <div><span>Factory</span><p>{{rfq.factoryCode}}</p></div>
+    <div><span>Total Value</span><p>₹ {{rfq.totalEstimatedValue}}</p></div>
+
+    <div class="full"><span>Description</span><p>{{rfq.description}}</p></div>
+  </div>
+
+  <div class="action-btns">
+    <button mat-raised-button color="primary" (click)="goToItems()">View Items</button>
+    <button mat-raised-button color="accent" (click)="goToVendors()">View Vendors</button>
+    <button mat-stroked-button color="warn" (click)="editRfq()">Edit RFQ</button>
+  </div>
+
+</mat-card>

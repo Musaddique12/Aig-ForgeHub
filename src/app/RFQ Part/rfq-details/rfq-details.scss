@@ -1,0 +1,60 @@
+.page-title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:15px;
+  color:#1c313a;
+}
+
+/* Card layout */
+.rfq-detail-card{
+  padding:20px;
+  border-radius:12px;
+  background:#ffffff;
+}
+
+/* Grid layout */
+.details-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-bottom:15px;
+}
+
+.details-grid div span{
+  font-size:14px;
+  color:#455a64;
+  font-weight:600;
+}
+
+.details-grid div p{
+  font-size:16px;
+  font-weight:700;
+  margin-top:5px;
+  color:#263238;
+}
+
+.full{
+  grid-column:span 2; /* description takes full row on big screens */
+}
+
+/* Status Color Badge */
+.status-badge{
+  padding:4px 12px;
+  border-radius:16px;
+  font-size:13px;
+  font-weight:600;
+}
+.status-draft{ background:#fff3cd; color:#b58900; }
+.status-published{ background:#d4edda; color:#1b5e20; }
+.status-closed{ background:#f8d7da; color:#b71c1c; }
+
+/* Action Buttons */
+.action-btns{
+  display:flex;
+  gap:12px;
+  margin-top:10px;
+}
+
+.action-btns button:hover{
+  transform:scale(.97);
+}

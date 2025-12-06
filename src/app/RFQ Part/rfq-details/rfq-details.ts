@@ -2,11 +2,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RfqSerVice } from '../../../Services/RfqSerVice';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-rfq-details',
   standalone: true,
-  imports:[CommonModule],
+  imports:[CommonModule,  MatCardModule,
+    MatButtonModule,  ],
   templateUrl: './rfq-details.html',
   styleUrls:['./rfq-details.scss']
 })

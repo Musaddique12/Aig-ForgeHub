@@ -1,0 +1,93 @@
+<div class="page">
+  <h2 class="title">RFQ Item Details</h2>
+
+  <mat-card class="mat-elevation-z4 card">
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" color="primary"></mat-progress-bar>
+
+    <!-- ===== VIEW MODE ===== -->
+    <div *ngIf="!editMode">
+
+      <h3 class="sub">RFQ Item Overview</h3>
+      <p><b>Name:</b> {{item.itemName}}</p>
+      <p><b>Quantity:</b> {{item.quantity}}</p>
+      <p><b>UOM:</b> {{item.uom}}</p>
+      <p><b>Price Per Price:</b> {{item.perPiecePrice}}</p>
+      <p><b>Total</b> {{item.perPiecePrice * item.quantity}}</p>
+      <p><b>Delivery:</b> {{item.requiredDeliveryDate | date}}</p>
+
+      <hr>
+
+      <!-- ITEM MASTER INFO READ ONLY -->
+      <h3 class="sub">Item Master Details</h3>
+      <div *ngIf="itemDetails">
+        <p><b>Code:</b> {{itemDetails.itemCode}}</p>
+        <p><b>Name:</b> {{itemDetails.name}}</p>
+        <p><b>Description:</b> {{itemDetails.description}}</p>
+        <p><b>Specifications:</b> {{itemDetails.specifications}}</p>
+
+        <button mat-stroked-button color="accent"
+                (click)="router.navigate(['/updateItems',itemId])">
+          Edit Item Master
+        </button>
+      </div>
+
+      <br><button mat-raised-button color="primary" (click)="editMode=true">Edit RFQ Item</button>
+    </div>
+
+
+    <!-- ===== EDIT MODE ===== -->
+    <div *ngIf="editMode" class="form">
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="item.itemName">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Quantity</mat-label>
+        <input matInput type="number" [(ngModel)]="item.quantity">
+      </mat-form-field>
+
+       <mat-form-field appearance="outline" class="full">
+        <mat-label>Per Piece Price</mat-label>
+        <input matInput type="number" [(ngModel)]="item.perPiecePrice">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+  <mat-label>Description</mat-label>
+  <textarea matInput [(ngModel)]="item.description"></textarea>
+</mat-form-field>
+
+<mat-form-field appearance="outline" class="full">
+  <mat-label>Specifications</mat-label>
+  <textarea matInput [(ngModel)]="item.specifications"></textarea>
+</mat-form-field>
+
+<mat-form-field appearance="outline" class="full">
+  <mat-label>Indent Line No</mat-label>
+  <input matInput [(ngModel)]="item.indentLineNo">
+</mat-form-field>
+
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>UOM</mat-label>
+        <input matInput [(ngModel)]="item.uom">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Estimated Price</mat-label>
+        <input matInput type="number" [value]="item.perPiecePrice* item.quantity" disabled="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Delivery Date</mat-label>
+        <input matInput type="date" [(ngModel)]="item.requiredDeliveryDate">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="updateItem()">Save</button>
+      <button mat-stroked-button color="warn" (click)="editMode=false">Cancel</button>
+    </div>
+
+  </mat-card>
+</div>

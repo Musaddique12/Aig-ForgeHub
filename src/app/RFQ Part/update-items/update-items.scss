@@ -1,0 +1,29 @@
+.update-container{
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+.update-card{
+  width:100%;
+  max-width:750px;
+}
+
+.form-grid{
+  display:grid;
+  gap:15px;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+}
+
+.full{ grid-column:span 2; }
+
+.actions{
+  text-align:right;
+  margin-top:15px;
+  display:flex;
+  justify-content:flex-end;
+  gap:15px;
+}
+
+.success{ background:#4caf50 !important; color:white !important; font-weight:bold; }
+.error{ background:#f44336 !important; color:white !important; font-weight:bold; }

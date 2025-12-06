@@ -1,24 +1,78 @@
-<p>Add Item Form</p>
+<div class="add-item-page">
 
-<input placeholder="Item Code" [(ngModel)]="item.itemCode"><br>
-<input placeholder="Name" [(ngModel)]="item.name"><br>
-<input placeholder="Description" [(ngModel)]="item.description"><br>
-<input placeholder="Category JSON" [(ngModel)]="item.categoryJson"><br>
+  <mat-card class="mat-elevation-z4 form-card">
+    <mat-card-header>
+      <mat-card-title>Add New Item</mat-card-title>
+      <mat-card-subtitle>AIG ForgeHub – RFQ / Bidding Items</mat-card-subtitle>
+    </mat-card-header>
 
-<select [(ngModel)]="item.uom">
-    <option value="">Select UOM</option>
-    <option>custom</option>
-    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
-</select>
+    <mat-card-content>
 
-<input placeholder="Specifications" [(ngModel)]="item.specifications"><br>
-<input placeholder="Tolerance JSON" [(ngModel)]="item.toleranceJson"><br>
+      <div class="form-grid">
 
+        <!-- Item Code -->
+        <mat-form-field appearance="outline">
+          <mat-label>Item Code</mat-label>
+          <input matInput [(ngModel)]="item.itemCode">
+        </mat-form-field>
 
+        <!-- Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="item.name">
+        </mat-form-field>
 
-<select [(ngModel)]="item.isActive">
-    <option [ngValue]="true">Active</option>
-    <option [ngValue]="false">Inactive</option>
-</select><br><br>
+        <!-- Description -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Description</mat-label>
+          <textarea matInput rows="2" [(ngModel)]="item.description"></textarea>
+        </mat-form-field>
 
-<button (click)="submit()">Save</button>
+        <!-- Category JSON -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Category JSON</mat-label>
+          <input matInput [(ngModel)]="item.categoryJson">
+        </mat-form-field>
+
+        <!-- UOM -->
+        <mat-form-field appearance="outline">
+          <mat-label>UOM</mat-label>
+          <mat-select [(ngModel)]="item.uom">
+            <mat-option value="">Select UOM</mat-option>
+            <mat-option value="custom">custom</mat-option>
+            <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Specifications -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Specifications</mat-label>
+          <input matInput [(ngModel)]="item.specifications">
+        </mat-form-field>
+
+        <!-- Tolerance JSON -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tolerance JSON</mat-label>
+          <input matInput [(ngModel)]="item.toleranceJson">
+        </mat-form-field>
+
+        <!-- Status -->
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="item.isActive">
+            <mat-option [value]="true">Active</mat-option>
+            <mat-option [value]="false">Inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="submit()">Save</button>
+        <button mat-stroked-button color="accent" routerLink="/items">Cancel</button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

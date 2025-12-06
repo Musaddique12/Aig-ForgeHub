@@ -1,14 +1,29 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RfqItemsService } from '../../../Services/rfq-items-service';
 import { ItemService } from '../../../Services/Items';  // ITEM SERVICE FOR DROPDOWN
+
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { RouterModule } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-rfq-items',
   standalone:true,
-  imports:[CommonModule,FormsModule],
+  imports:[  CommonModule,FormsModule,
+  MatCardModule,MatFormFieldModule,MatInputModule,
+  MatSelectModule,MatButtonModule,MatPaginatorModule,
+    RouterModule  // ⭐ required for routerLink / navigate buttons
+
+],
   templateUrl:'./rfq-items.html',
   styleUrls:['./rfq-items.scss']
 })
@@ -18,7 +33,9 @@ export class RfqItems implements OnInit {
     private route:ActivatedRoute,
     private rfqItemService:RfqItemsService,
     private itemService:ItemService,
-    private cd:ChangeDetectorRef
+    private cd:ChangeDetectorRef,
+     public router: Router
+
   ){}
 
   rfqId:string="";
@@ -36,6 +53,7 @@ export class RfqItems implements OnInit {
     quantity:1,
     uom:"",
     specifications:"",
+      perPiecePrice:0,       // ⭐ added
     estimatedPrice:0,
     requiredDeliveryDate:"",
     indentLineNo:""
@@ -69,13 +87,14 @@ export class RfqItems implements OnInit {
     this.rfqItemService.rfqItemsByRfqId(this.query).subscribe((res:any)=>{
       this.items = res?.data?.items ?? [];
       this.totalItems = res?.data?.totalCount ?? 0;
+      this.updateRfqTotal(); // caliimg here it better because when we go to item and add that then we cam back and when we came it oage get refresh so it iwll get update aautomatically 
       this.cd.detectChanges();
       console.log("loading items " ,  this.query.searchAny)
     });
   }
 
   
-  // LOAD ALL ITEMS FOR DROPDOWN
+  // LOAD ALL ITEMS FOR DROPDOWN for foreng key
   loadItemDropdown(){
     this.itemService.getFiltered({}).subscribe((res:any)=>{
       this.itemList = res.data.items;
@@ -118,6 +137,7 @@ console.log(this.itemList)
     this.rfqItemService.addRfqItems(this.newItem).subscribe(()=>{
       alert("Item Added");
       this.getItems();
+      this.updateRfqTotal();
     })
   }
 
@@ -132,6 +152,7 @@ console.log(this.itemList)
       alert("Item Updated");
       this.editModeId=null;
       this.getItems();
+      this.updateRfqTotal();
     })
   }
 
@@ -142,10 +163,46 @@ console.log(this.itemList)
       this.rfqItemService.deleteRfqItem(id).subscribe(()=>{
         alert("Deleted");
         this.getItems();
+        this.updateRfqTotal();
       })
     }
   }
 
   prev(){ if(this.query.pageNumber>1){ this.query.pageNumber--; this.getItems(); } }
   next(){ this.query.pageNumber++; this.getItems(); }
+
+
+  // Paginator method 
+  onPageChange(event: any) {   // if you want you can replace `any` with PageEvent
+  this.query.pageNumber = event.pageIndex + 1;  
+  this.query.pageSize = event.pageSize;
+  this.getItems();           // reload list
+}
+
+
+//calculating total of the rfq item 
+calculateTotal() {
+  if(this.newItem.quantity && this.newItem.perPiecePrice){
+    this.newItem.estimatedPrice = Number(this.newItem.quantity) * Number(this.newItem.perPiecePrice);
+  }
+}
+
+updateRfqTotal() {
+  console.log("ENtrign in the update rfq total method")
+  let total = 0;
+
+  this.items.forEach((x:any)=>{
+      console.log("ENtrign in the update rfq total method loop")
+
+    total += Number(x.estimatedPrice ?? 0);
+  });
+  console.log("existing in the update rfq total method loop")
+
+  // Call RFQ Update API
+  this.rfqItemService.updateRfqTotal(this.rfqId,total).subscribe({
+    next:()=> console.log("RFQ total updated:", total),
+    error:(err)=> console.log("Total update failed",err)
+  })
+}
+
 }

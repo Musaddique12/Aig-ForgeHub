@@ -5,15 +5,50 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 @Component({
   selector: 'app-api',
-  imports: [CommonModule, FormsModule] ,
+    standalone: true,
+    imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatTooltipModule
+  ] ,
   templateUrl: './Items.html',
   styleUrl: './Items.scss',
 })
 
+
+
 export class ShowItems implements OnInit {
-    
+  
+   displayedColumns: string[] = [
+    'itemCode',
+    'name',
+    'description',
+    'uom',
+    'categoryJson',
+    'specifications',
+    'actions'
+  ]; 
+
 query = {
   name: "",
   itemCode: "",
@@ -95,5 +130,16 @@ Delete(id:any){
     console.log(this.uom)
      this.cd.detectChanges();
   }
+
+
+
+
+    // ⭐ Material paginator event
+  onPageChange(event: PageEvent) {
+    this.query.pageNumber = event.pageIndex + 1;  // API is 1-based
+    this.query.pageSize = event.pageSize;
+    this.getItems();
+  }
+
 
 }

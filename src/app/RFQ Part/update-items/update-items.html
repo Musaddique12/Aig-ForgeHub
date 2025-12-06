@@ -1,21 +1,65 @@
-<p>Update Item</p>
+<div class="update-container">
 
-<input placeholder="Name" [(ngModel)]="item.name"><br>
-<input placeholder="Description" [(ngModel)]="item.description"><br>
-<input placeholder="Category Json" [(ngModel)]="item.categoryJson"><br>
+  <mat-card class="mat-elevation-z4 update-card">
+    <mat-card-header>
+      <mat-card-title>Update Item</mat-card-title>
+      <mat-card-subtitle>Edit item details</mat-card-subtitle>
+    </mat-card-header>
 
-<select [(ngModel)]="item.uom" (change)="getItems()">
-    <option value="">Select UOM</option>
-    <option>custom</option>
-    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
-</select>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" color="primary"></mat-progress-bar>
 
-<input placeholder="Specifications" [(ngModel)]="item.specifications"><br>
-<input placeholder="Tolerance Json" [(ngModel)]="item.toleranceJson"><br>
+    <mat-card-content>
+      
+      <div class="form-grid">
 
-<select [(ngModel)]="item.isActive">
-    <option [ngValue]="true">Active</option>
-    <option [ngValue]="false">Inactive</option>
-</select><br><br>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="item.name">
+        </mat-form-field>
 
-<button (click)="update()">Update</button>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput [(ngModel)]="item.description">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Category Json</mat-label>
+          <input matInput [(ngModel)]="item.categoryJson">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>UOM</mat-label>
+          <mat-select [(ngModel)]="item.uom">
+            <mat-option value="">Select UOM</mat-option>
+            <mat-option value="custom">custom</mat-option>
+            <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Specifications</mat-label>
+          <input matInput [(ngModel)]="item.specifications">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tolerance Json</mat-label>
+          <input matInput [(ngModel)]="item.toleranceJson">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="item.isActive">
+            <mat-option [value]="true">Active</mat-option>
+            <mat-option [value]="false">Inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="update()">Update</button>
+        <button mat-stroked-button color="warn" routerLink="/items">Cancel</button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

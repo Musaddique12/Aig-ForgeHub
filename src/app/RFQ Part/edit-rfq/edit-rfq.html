@@ -1,35 +1,103 @@
-<h2>Edit RFQ</h2>
+<h2 class="page-title">Edit RFQ</h2>
+
+<mat-card class="edit-card mat-elevation-z4">
 
 <form [formGroup]="rfqForm">
-<mat-horizontal-stepper>
 
-<!-- Step-1 RFQ Details -->
-<mat-step label="RFQ Details">
-  <input formControlName="rfqNumber" placeholder="RFQ Number">
-  <input formControlName="title" placeholder="Title">
-  <textarea formControlName="description" placeholder="Description"></textarea>
-  <input formControlName="status" placeholder="Status">
-  <input type="date" formControlName="submissionDeadline">
-  <input formControlName="factoryCode" placeholder="Factory Code">
-  <input formControlName="currencyJson" placeholder="Currency JSON">
-  <input type="number" formControlName="totalEstimatedValue" placeholder="Value">
+  <mat-horizontal-stepper>
 
-  <button mat-button matStepperNext>Next</button>
-</mat-step>
+    <!-- STEP 1 — RFQ DETAILS -->
+    <mat-step label="RFQ Details">
 
-<!-- Step-2 RFQ Items -->
-<mat-step label="RFQ Items">
-  <button (click)="router.navigate(['/rfq-items',rfqId])">Manage Items</button>
-  <p>You will add, update, delete items on next page</p>
-  <button mat-button matStepperNext>Next</button>
-</mat-step>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>RFQ Number</mat-label>
+          <input matInput formControlName="rfqNumber">
+        </mat-form-field>
 
-<!-- Step-3 Vendors -->
-<mat-step label="Vendors">
-  <button (click)="router.navigate(['/rfq-vendors',rfqId])">Manage Vendors</button>
-  <p>You will add, update, delete vendors on next page</p>
-  <button mat-button color="primary" (click)="updateRfq()">Save Changes</button>
-</mat-step>
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field>
 
-</mat-horizontal-stepper>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Description</mat-label>
+          <textarea matInput rows="3" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <input matInput formControlName="status">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Submission Deadline</mat-label>
+          <input matInput type="date" formControlName="submissionDeadline">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Factory Code</mat-label>
+          <input matInput formControlName="factoryCode">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Currency JSON</mat-label>
+          <input matInput formControlName="currencyJson">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Total Estimated Value</mat-label>
+          <input matInput type="number" formControlName="totalEstimatedValue">
+        </mat-form-field>
+      </div>
+
+      <div class="step-actions">
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+
+
+
+    <!-- STEP 2 — ITEMS -->
+    <mat-step label="RFQ Items">
+
+      <p class="info-text">Manage RFQ items from next page</p>
+
+      <button mat-stroked-button color="primary" (click)="router.navigate(['/rfq-items',rfqId])">
+        Manage Items
+      </button>
+
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+
+    </mat-step>
+
+
+
+
+    <!-- STEP 3 — VENDORS -->
+    <mat-step label="Vendors">
+
+      <p class="info-text">Manage vendor access on next page</p>
+
+      <button mat-stroked-button color="primary" (click)="router.navigate(['/rfq-vendors',rfqId])">
+        Manage Vendors
+      </button>
+
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="warn" (click)="updateRfq()">
+          Save Changes
+        </button>
+      </div>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
 </form>
+
+</mat-card>

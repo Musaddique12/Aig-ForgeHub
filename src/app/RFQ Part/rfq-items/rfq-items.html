@@ -1,72 +1,150 @@
-<h2>RFQ Items</h2>
+<h2 class="page-title">RFQ Items</h2>
 
-<!-- ADD NEW ITEM FORM -->
-<div class="box">
+<mat-card class="add-item-card mat-elevation-z4">
   <h3>Add Item</h3>
 
-PageSize  <select [(ngModel)]="query.pageSize" (change)="getItems()">
-    <option [ngValue]="2">2</option>
-    <option [ngValue]="5">5</option>
-    <option [ngValue]="10">10</option>
-    <option [ngValue]="20">20</option>
-</select>
-<p>Total Number of Items : {{totalItems}}</p>
-<br/>
-  <!-- Dropdown Item -->
-  <select [(ngModel)]="newItem.itemId" (change)="onItemSelect(newItem.itemId)">
-    <option value="">Select Item</option>
-    <option *ngFor="let i of itemList" [value]="i.id">
-      {{i.name}} - {{i.itemCode}}
-    </option>
-  </select>
 
-  <input placeholder="Item No" [(ngModel)]="newItem.itemNo">
-  <input placeholder="Item Name" [(ngModel)]="newItem.itemName">
-  <input placeholder="Description" [(ngModel)]="newItem.description">
-  <input placeholder="Quantity" type="number" [(ngModel)]="newItem.quantity">
+  <div class="form-grid">
 
-  <select [(ngModel)]="newItem.uom">
-    <option value="">Select UOM</option>
-    <option>custom</option>
-    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
-</select>
+    <mat-form-field appearance="outline">
+      <mat-label>Select Item</mat-label>
+      <mat-select [(ngModel)]="newItem.itemId" (selectionChange)="onItemSelect(newItem.itemId)">
+        <mat-option value="">Select</mat-option>
+        <mat-option *ngFor="let i of itemList" [value]="i.id">
+          {{i.name}} - {{i.itemCode}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <input placeholder="Specifications" [(ngModel)]="newItem.specifications">
-  <input placeholder="Price" type="number" [(ngModel)]="newItem.estimatedPrice">
-  <input type="date" [(ngModel)]="newItem.requiredDeliveryDate">
-  <input placeholder="Indent Line No" [(ngModel)]="newItem.indentLineNo">
+    <mat-form-field appearance="outline">
+      <mat-label>Item No</mat-label>
+      <input matInput [(ngModel)]="newItem.itemNo">
+    </mat-form-field>
 
-  <button (click)="addItem()">Add Item</button>
-</div>
+    <mat-form-field appearance="outline">
+      <mat-label>Item Name</mat-label>
+      <input matInput [(ngModel)]="newItem.itemName">
+    </mat-form-field>
 
-<hr>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="newItem.description">
+    </mat-form-field>
 
-<!-- ITEM LIST WITH EDIT/DELETE -->
+    <mat-form-field appearance="outline">
+      <mat-label>Quantity</mat-label>
+      <input matInput type="number" [(ngModel)]="newItem.quantity" (input)="calculateTotal()">
+    </mat-form-field>
 
-  <input placeholder="Search Anything" [(ngModel)]="query.searchAny" (input)="getItems()">
+    <mat-form-field appearance="outline">
+      <mat-label>UOM</mat-label>
+      <mat-select [(ngModel)]="newItem.uom">
+        <mat-option value="">Select</mat-option>
+        <mat-option value="custom">custom</mat-option>
+        <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<div *ngFor="let i of items" class="card">
+    <mat-form-field appearance="outline">
+      <mat-label>Specifications</mat-label>
+      <input matInput [(ngModel)]="newItem.specifications">
+    </mat-form-field>
 
-  <!-- VIEW -->
-  <div *ngIf="editModeId!==i.id">
-    <p><b>{{i.itemName}}</b> - {{i.itemNo}}</p>
-    <p>Qty: {{i.quantity}} | Price: {{i.estimatedPrice}}</p>
-    <button (click)="startEdit(i)">Edit</button>
-    <button (click)="deleteItem(i.id)">Delete</button>
+  <mat-form-field appearance="outline">
+  <mat-label>Per Piece Price</mat-label>
+  <input matInput type="number" [(ngModel)]="newItem.perPiecePrice" (input)="calculateTotal()">
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Total Estimated Price</mat-label>
+  <input matInput type="number" [(ngModel)]="newItem.estimatedPrice" disabled>
+</mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Delivery Date</mat-label>
+      <input matInput type="date" [(ngModel)]="newItem.requiredDeliveryDate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Indent Line No</mat-label>
+      <input matInput [(ngModel)]="newItem.indentLineNo">
+    </mat-form-field>
+
   </div>
 
-  <!-- EDIT MODE -->
-  <div *ngIf="editModeId===i.id">
-    <input [(ngModel)]="editItem.itemName">
-    <input [(ngModel)]="editItem.quantity" type="number">
-    <input [(ngModel)]="editItem.estimatedPrice" type="number">
-    <button (click)="saveEdit()">Save</button>
-    <button (click)="cancelEdit()">Cancel</button>
-  </div>
+  <button mat-raised-button color="primary" (click)="addItem()">Add Item</button>
+</mat-card>
 
+
+
+
+<!-- ==================== SEARCH & PAGE SIZE ==================== -->
+<div class="top-row">
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search anything..." [(ngModel)]="query.searchAny" (input)="getItems()">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Page Size</mat-label>
+    <mat-select [(ngModel)]="query.pageSize" (selectionChange)="getItems()">
+      <mat-option *ngFor="let p of [2,5,10,20]" [value]="p">{{p}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="total">Total Items: <b>{{totalItems}}</b></div>
 </div>
 
-<!-- Pagination -->
-<button (click)="prev()">Prev</button>
-<p>{{query.pageNumber}}</p>
-<button (click)="next()">Next</button>
+
+
+
+<!-- ==================== ITEM LIST ==================== -->
+<div *ngFor="let i of items" class="item-card mat-elevation-z2">
+
+  <!-- Normal View -->
+  <ng-container *ngIf="editModeId!==i.id">
+
+    <div class="row">
+      <b>{{i.itemName}}</b> <span>#{{i.itemNo}}</span>
+    </div>
+
+    <p>Qty: {{i.quantity}} | Price: ₹{{i.estimatedPrice}}</p>
+
+    <div class="actions">
+<button (click)="router.navigate(['/rfq-item', i.id])">View Item</button>
+      <button mat-stroked-button color="warn" (click)="deleteItem(i.id)">Delete</button>
+    </div>
+  </ng-container>
+
+
+
+  <!-- Edit Mode -->
+  <!-- <ng-container *ngIf="editModeId===i.id">
+
+    <div class="edit-grid">
+      <input [(ngModel)]="editItem.itemName">
+      <input [(ngModel)]="editItem.quantity" type="number">
+      <input [(ngModel)]="editItem.estimatedPrice" type="number">
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="saveEdit()">Save</button>
+      <button mat-stroked-button color="warn" (click)="cancelEdit()">Cancel</button>
+    </div>
+
+  </ng-container>
+</div> -->
+
+
+
+
+<!-- ==================== PAGINATOR ==================== -->
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="query.pageSize"
+  [pageIndex]="query.pageNumber - 1"
+  (page)="onPageChange($event)"
+  [pageSizeOptions]="[2,5,10,20]"
+  showFirstLastButtons>
+</mat-paginator>

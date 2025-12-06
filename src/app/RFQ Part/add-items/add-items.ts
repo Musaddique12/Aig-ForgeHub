@@ -2,12 +2,24 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ItemService } from '../../../Services/Items';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-items',
   standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './add-items.html',
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule
+  ],  templateUrl: './add-items.html',
   styleUrls: ['./add-items.scss'],
 })
 export class AddItems implements OnInit {

@@ -31,8 +31,13 @@ export class RfqItemsService {
   deleteRfqItem(id:string){
   return this.http.delete(`${this.url}/delete/${id}`);
 }
+
 updateRfqItem(id: string, data: any) {
   return this.http.put(`${this.url}/update/${id}`, data);
+}
+
+updateRfqTotal(rfqId:string,total:number){
+  return this.http.patch(`https://localhost:7097/api/RfqItem/update-total/${rfqId}`, {total});
 }
 
 }

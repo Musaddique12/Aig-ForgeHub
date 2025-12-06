@@ -1,75 +1,127 @@
-<h2>Vendors for RFQ</h2>
+<h2 class="title">RFQ Vendors</h2>
 
-<!-- ADD NEW VENDOR -->
-<div class="box">
+<!-- 🔹 Add Vendor Card -->
+<mat-card class="vendor-add-card mat-elevation-z4">
+
   <h3>Add Vendor</h3>
 
-  <select [(ngModel)]="newVendor.vendorId">
-    <option value="">Select Vendor</option>
-    <option *ngFor="let v of sampleVendors" [value]="v.id">
-      {{v.name}} - {{v.id | slice:0:6}}...
-    </option>
-  </select>
+  <div class="form-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Select Vendor</mat-label>
+      <mat-select [(ngModel)]="newVendor.vendorId">
+        <mat-option value="">Select Vendor</mat-option>
+        <mat-option *ngFor="let v of sampleVendors" [value]="v.id">
+          {{v.name}} - {{v.id | slice:0:6}}...
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Manual ENUM Dropdown -->
-  <select [(ngModel)]="newVendor.status">
-    <option value="invited">invited</option>
-    <option value="viewed">viewed</option>
-    <option value="bid_submitted">bid_submitted</option>
-    <option value="selected">selected</option>
-    <option value="rejected">rejected</option>
-  </select>
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="newVendor.status">
+        <mat-option value="invited">Invited</mat-option>
+        <mat-option value="viewed">Viewed</mat-option>
+        <mat-option value="bid_submitted">Bid Submitted</mat-option>
+        <mat-option value="selected">Selected</mat-option>
+        <mat-option value="rejected">Rejected</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-
-  <input [(ngModel)]="newVendor.allowedUntil" type="datetime-local">
-  <button (click)="addVendor()">Add Vendor</button>
-</div>
-
-<hr>
-
-<!-- VENDOR LIST -->
-<p>Total Vendors : {{totalVendors}}</p>
-
- <select [(ngModel)]="pageSize" (change)="loadVendors()">
-    <option [ngValue]="2">2</option>
-    <option [ngValue]="5">5</option>
-    <option [ngValue]="10">10</option>
-    <option [ngValue]="20">20</option>
-  </select>
-
-  <select [(ngModel)]="status" (change)="loadVendors()">
-    <option [ngValue]="'invited'">Invited</option>
-    <option [ngValue]="'viewed'">Viewed</option>
-    <option [ngValue]="'bid_submitted'">Bid Submitted</option>
-    <option [ngValue]="'selected'">Selected</option>
-        <option [ngValue]="'rejected'">Rejected</option>
-  </select>
-
-<div *ngFor="let v of vendors" class="card">
-
- 
-  <!-- VIEW MODE -->
-  <div *ngIf="editModeId!==v.id">
-    <p><b>{{v.vendorId}}</b></p>
-    <p>Status: {{v.status}}</p>
-
-    <p>Allowed Until: {{v.allowedUntil | date:'short'}}</p>
-
-    <button (click)="startEdit(v)">Edit</button>
-    <button (click)="deleteVendor(v.id)">Delete</button>
+    <mat-form-field appearance="outline">
+      <mat-label>Allowed Until</mat-label>
+      <input matInput type="datetime-local" [(ngModel)]="newVendor.allowedUntil">
+    </mat-form-field>
   </div>
 
-  <!-- EDIT MODE -->
-  <div *ngIf="editModeId===v.id">
-    <input [(ngModel)]="editVendor.status" placeholder="Status">
-    <input [(ngModel)]="editVendor.allowedUntil" type="datetime-local">
-    <button (click)="saveEdit()">Save</button>
-    <button (click)="cancelEdit()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addVendor()">Add Vendor</button>
+</mat-card>
+
+
+
+<!-- 🔹 Filters -->
+<mat-card class="vendor-filter mat-elevation-z3">
+
+  <div class="filter-row">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="status" (selectionChange)="loadVendors()">
+        <mat-option value="">All</mat-option>
+        <mat-option value="invited">Invited</mat-option>
+        <mat-option value="viewed">Viewed</mat-option>
+        <mat-option value="bid_submitted">Bid Submitted</mat-option>
+        <mat-option value="selected">Selected</mat-option>
+        <mat-option value="rejected">Rejected</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Page Size</mat-label>
+      <mat-select [(ngModel)]="pageSize" (selectionChange)="loadVendors()">
+        <mat-option [value]="2">2</mat-option>
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="20">20</mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </div>
 
-  
+  <p class="count">Total Vendors: <b>{{totalVendors}}</b></p>
+</mat-card>
+
+
+
+<!-- 🔹 Vendor List -->
+<div class="vendor-list">
+
+  <mat-card class="vendor-card mat-elevation-z2" *ngFor="let v of vendors">
+
+    <!-- View Mode -->
+    <div *ngIf="editModeId!==v.id">
+
+      <div class="vendor-row">
+        <span class="vendor-id">{{v.vendorId}}</span>
+        <span class="vendor-status">{{v.status | uppercase}}</span>
+      </div>
+
+      <p class="light">Allowed Until: {{v.allowedUntil | date:'medium'}}</p>
+
+      <div class="actions">
+        <button mat-button color="primary" (click)="startEdit(v)">Edit</button>
+        <button mat-button color="warn" (click)="deleteVendor(v.id)">Delete</button>
+      </div>
+
+    </div>
+
+    <!-- Edit Mode -->
+    <div *ngIf="editModeId===v.id" class="edit-box">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput [(ngModel)]="editVendor.status">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Allowed Until</mat-label>
+        <input matInput type="datetime-local" [(ngModel)]="editVendor.allowedUntil">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="saveEdit()">Save</button>
+      <button mat-stroked-button color="warn" (click)="cancelEdit()">Cancel</button>
+
+    </div>
+
+  </mat-card>
 </div>
 
-<button (click)="prev()">Prev</button>
-  <p>Page Number : {{pagenumber}}</p>
-  <button (click)="next()">Next</button>
+
+
+<!-- Pagination -->
+<mat-paginator
+  [length]="totalVendors"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[2,5,10,20]"
+  (page)="onPageChange($event)"
+  showFirstLastButtons>
+</mat-paginator>

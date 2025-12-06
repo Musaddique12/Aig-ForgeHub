@@ -4,10 +4,27 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RfqVendorService } from '../../../Services/rfq-vendor-service';
 
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
+import { MatButtonModule } from "@angular/material/button";
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
 @Component({
   selector: 'app-rfq-vendors',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+ imports: [
+  CommonModule,
+  FormsModule,
+
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatPaginatorModule
+],
   templateUrl: './rfq-vandors.html',
   styleUrls: ['./rfq-vandors.scss']
 })
@@ -111,5 +128,12 @@ prev(){
     this.loadVendors();
   }
 }
+
+onPageChange(event: PageEvent) {
+  this.pagenumber = event.pageIndex + 1;
+  this.pageSize = event.pageSize;
+  this.loadVendors();
+}
+
 
 }

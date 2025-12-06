@@ -1,72 +1,170 @@
-<h2>Add New RFQ</h2>
+<h2 class="title">Add New RFQ</h2>
 
-<mat-horizontal-stepper>
+<mat-horizontal-stepper class="stepper" labelPosition="bottom">
 
-<!-- ───────────────── STEP-1 RFQ ───────────────── -->
+<!-- ───────────── STEP 1 ───────────── -->
 <mat-step>
-  <h3>RFQ Details</h3>
+  <mat-card class="card">
+    <mat-card-title class="step-title">RFQ Details</mat-card-title>
 
-  <input placeholder="RFQ Number" [(ngModel)]="rfqForm.value.rfqNumber"><br>
-  <input placeholder="Title" [(ngModel)]="rfqForm.value.title"><br>
-  <input placeholder="Description" [(ngModel)]="rfqForm.value.description"><br>
-  <input placeholder="Status" [(ngModel)]="rfqForm.value.status"><br>
-  <input type="date" [(ngModel)]="rfqForm.value.submissionDeadline"><br>
-  <input placeholder="Factory Code" [(ngModel)]="rfqForm.value.factoryCode"><br>
-  <input placeholder="Currency Json" [(ngModel)]="rfqForm.value.currencyJson"><br>
-  <input type="number" placeholder="Total Estimated Value" [(ngModel)]="rfqForm.value.totalEstimatedValue"><br><br>
+    <div class="form-grid">
 
-  <button mat-button color="primary" (click)="saveRfq()">Save RFQ</button>
-  <button mat-button matStepperNext>Next</button>
+      <mat-form-field appearance="outline">
+        <mat-label>RFQ Number</mat-label>
+        <input matInput [(ngModel)]="rfqForm.value.rfqNumber">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="rfqForm.value.title">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="2" [(ngModel)]="rfqForm.value.description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput [(ngModel)]="rfqForm.value.status">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Submission Deadline</mat-label>
+        <input type="date" matInput [(ngModel)]="rfqForm.value.submissionDeadline">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Factory Code</mat-label>
+        <input matInput [(ngModel)]="rfqForm.value.factoryCode">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Currency Json</mat-label>
+        <input matInput [(ngModel)]="rfqForm.value.currencyJson">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Total Estimated Value</mat-label>
+        <input type="number" matInput [(ngModel)]="rfqForm.value.totalEstimatedValue">
+      </mat-form-field>
+    </div>
+
+    <div class="step-actions">
+      <button mat-raised-button color="primary" (click)="saveRfq()">Save RFQ</button>
+      <button mat-flat-button color="accent" matStepperNext>Next</button>
+    </div>
+  </mat-card>
 </mat-step>
 
 
-<!-- ───────────────── STEP-2 ITEMS ───────────────── -->
+
+<!-- ───────────── STEP 2 ───────────── -->
 <mat-step>
-  <h3>Add RFQ Item</h3>
+  <mat-card class="card">
+    <mat-card-title class="step-title">Add RFQ Item</mat-card-title>
 
-  <select [(ngModel)]="itemForm.controls['itemId'].value" (change)="onItemSelect($event)">
-    <option value="">-- Select Item --</option>
-    <option *ngFor="let i of itemsList" [value]="i.id">
-      {{i.name}} - {{i.itemCode}}  <!-- display text -->
-    </option>
-  </select><br><br>
+    <div class="form-grid">
 
-  <input placeholder="Item No" [(ngModel)]="itemForm.value.itemNo"><br>
-  <input placeholder="Item Name" [(ngModel)]="itemForm.value.itemName"><br>
-  <input placeholder="Description" [(ngModel)]="itemForm.value.description"><br>
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Select Item</mat-label>
+        <mat-select [(ngModel)]="itemForm.controls['itemId'].value" (selectionChange)="onItemSelect($event)">
+          <mat-option value="">-- Select Item --</mat-option>
+          <mat-option *ngFor="let i of itemsList" [value]="i.id">{{i.name}} - {{i.itemCode}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <select [(ngModel)]="itemForm.value.uom" (change)="getItems()">
-    <option value="">Select UOM</option>
-    <option>custom</option>
-    <option *ngFor="let i of uom" [ngValue]="i">{{ i }}</option>
-</select>
+      <mat-form-field appearance="outline">
+        <mat-label>Item No</mat-label>
+        <input matInput [(ngModel)]="itemForm.value.itemNo">
+      </mat-form-field>
 
-  <input type="number" placeholder="Quantity" [(ngModel)]="itemForm.value.quantity"><br>
-  <input placeholder="Specifications" [(ngModel)]="itemForm.value.specifications"><br>
-  <input type="number" placeholder="Estimated Price" [(ngModel)]="itemForm.value.estimatedPrice"><br>
-  <input type="date" [(ngModel)]="itemForm.value.requiredDeliveryDate"><br>
-  <input placeholder="Indent Line No" [(ngModel)]="itemForm.value.indentLineNo"><br><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Item Name</mat-label>
+        <input matInput [(ngModel)]="itemForm.value.itemName">
+      </mat-form-field>
 
-  <button mat-button (click)="addItem()">Add Item</button>
-  <button mat-button matStepperNext>Next</button>
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="2" [(ngModel)]="itemForm.value.description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>UOM</mat-label>
+        <mat-select [(ngModel)]="itemForm.value.uom">
+          <mat-option value="">Select UOM</mat-option>
+          <mat-option value="custom">custom</mat-option>
+          <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input type="number" matInput [(ngModel)]="itemForm.value.quantity">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Specifications</mat-label>
+        <input matInput [(ngModel)]="itemForm.value.specifications">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Estimated Price</mat-label>
+        <input type="number" matInput [(ngModel)]="itemForm.value.estimatedPrice">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Required Delivery Date</mat-label>
+        <input type="date" matInput [(ngModel)]="itemForm.value.requiredDeliveryDate">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Indent Line No</mat-label>
+        <input matInput [(ngModel)]="itemForm.value.indentLineNo">
+      </mat-form-field>
+    </div>
+
+    <div class="step-actions">
+      <button mat-raised-button color="primary" (click)="addItem()">Add Item</button>
+      <button mat-flat-button color="accent" matStepperNext>Next</button>
+    </div>
+  </mat-card>
 </mat-step>
 
 
-<!-- ───────────────── STEP-3 VENDOR ───────────────── -->
+
+<!-- ───────────── STEP 3 ───────────── -->
 <mat-step>
-  <h3>Add Vendor</h3>
+  <mat-card class="card">
+    <mat-card-title class="step-title">Add Vendor</mat-card-title>
 
-  <select [(ngModel)]="vendorForm.value.vendorId">
-    <option value="">-- Select Vendor (Example) --</option>
-    <option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor A</option>
-    <option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor B</option>
-  </select><br><br>
+    <div class="form-grid">
 
-  <input placeholder="Status" [(ngModel)]="vendorForm.value.status"><br>
-  <input type="datetime-local" [(ngModel)]="vendorForm.value.allowedUntil"><br><br>
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Select Vendor</mat-label>
+        <mat-select [(ngModel)]="vendorForm.value.vendorId">
+          <mat-option value="">-- Select Vendor --</mat-option>
+          <mat-option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor A</mat-option>
+          <mat-option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor B</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <button mat-button (click)="addVendor()">Add Vendor</button>
-  <button mat-button>Finish</button>
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput [(ngModel)]="vendorForm.value.status">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Allowed Until</mat-label>
+        <input type="datetime-local" matInput [(ngModel)]="vendorForm.value.allowedUntil">
+      </mat-form-field>
+    </div>
+
+    <div class="step-actions">
+      <button mat-raised-button color="primary" (click)="addVendor()">Add Vendor</button>
+      <button mat-flat-button color="warn">Finish</button>
+    </div>
+  </mat-card>
 </mat-step>
 
 </mat-horizontal-stepper>

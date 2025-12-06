@@ -1,0 +1,41 @@
+.page-title{ font-size:26px;font-weight:700;margin-bottom:15px;color:#1e2d39; }
+
+.add-item-card{
+  padding:20px;
+  margin-bottom:20px;
+  border-radius:12px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:15px;
+}
+
+.full{ grid-column:span 2; }
+
+/* Item Card */
+.item-card{
+  background:white;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:8px;
+  transition:.2s;
+}
+.item-card:hover{ transform:scale(.99); }
+
+.row{
+  display:flex;justify-content:space-between;
+  font-size:16px;margin-bottom:4px;
+}
+
+.top-row{
+  display:flex;gap:15px;align-items:center;
+  margin-bottom:12px;flex-wrap:wrap;
+}
+
+.total{font-size:15px;color:#37474f;}
+
+.actions{ display:flex;gap:10px;margin-top:10px; }
+
+.edit-grid{ display:flex;gap:10px;margin-top:8px; }
