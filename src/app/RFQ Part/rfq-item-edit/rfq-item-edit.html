@@ -72,8 +72,19 @@
 
       <mat-form-field appearance="outline" class="full">
         <mat-label>UOM</mat-label>
-        <input matInput [(ngModel)]="item.uom">
+        <mat-select [(ngModel)]="item.uom">
+        <mat-option value="">Select</mat-option>
+        <mat-option value="custom">custom</mat-option>
+        <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
+      </mat-select>
       </mat-form-field>
+
+       @if(item.uom === 'custom'){
+        <mat-form-field appearance="outline" >
+          <mat-label>Enter Custom UOM</mat-label>
+          <input matInput [(ngModel)]="customUom">
+        </mat-form-field>
+      }
 
       <mat-form-field appearance="outline" class="full">
         <mat-label>Estimated Price</mat-label>

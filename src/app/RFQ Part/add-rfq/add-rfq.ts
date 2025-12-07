@@ -101,7 +101,7 @@ export class AddRfq implements OnInit {
     }
   )
   }
-
+customUom:any;
     uom: any[] = [];
   data: any;
   query = {}
@@ -180,12 +180,19 @@ export class AddRfq implements OnInit {
   addItem(){
     if(!this.rfqId) return alert("Create RFQ first!");
 
+     
+
     let body = {...this.itemForm.value, rfqId:this.rfqId};
+
+    if (body.uom=== 'custom' && this.customUom.trim() !== '') {
+    body.uom = this.customUom;
+  }
 
     Object.keys(body).forEach(k => { if(body[k]===""||body[k]==undefined) body[k]=null });
 
     body.quantity = Number(body.quantity);
     body.estimatedPrice = Number(body.quantity * body.PerPiecePrice);
+           console.log(body)
 
     // RequiredDeliveryDate must stay as YYYY-MM-DD
     this.rfqItemsService.addRfqItems(body).subscribe({

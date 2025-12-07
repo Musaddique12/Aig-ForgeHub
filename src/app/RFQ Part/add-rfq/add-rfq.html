@@ -24,10 +24,18 @@
         <textarea matInput rows="2" [(ngModel)]="rfqForm.value.description"></textarea>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Status</mat-label>
-        <input matInput [(ngModel)]="rfqForm.value.status">
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+  <mat-label>Status</mat-label>
+  <select matNativeControl [(ngModel)]="rfqForm.value.status">
+    <option value="draft">Draft</option>
+    <option value="published">Published</option>
+    <option value="closed">Closed</option>
+    <option value="cancelled">Cancelled</option>
+    <option value="expired">Expired</option>
+    <option value="rejected">Rejected</option>
+  </select>
+</mat-form-field>
+
 
       <mat-form-field appearance="outline">
         <mat-label>Submission Deadline</mat-label>
@@ -44,10 +52,11 @@
         <input matInput [(ngModel)]="rfqForm.value.currencyJson">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline">
         <mat-label>Total Estimated Value</mat-label>
         <input type="number" matInput [(ngModel)]="rfqForm.value.totalEstimatedValue">
-      </mat-form-field>
+      </mat-form-field> -->
+      
     </div>
 
     <div class="step-actions">
@@ -97,7 +106,14 @@
           <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
         </mat-select>
       </mat-form-field>
+@if(itemForm.value.uom === 'custom'){
+        <mat-form-field appearance="outline" >
+          <mat-label>Enter Custom UOM</mat-label>
+          <input matInput [(ngModel)]="customUom">
+        </mat-form-field>
+      }
 
+      
       <mat-form-field appearance="outline">
         <mat-label>Quantity</mat-label>
         <input type="number" matInput [(ngModel)]="itemForm.value.quantity">

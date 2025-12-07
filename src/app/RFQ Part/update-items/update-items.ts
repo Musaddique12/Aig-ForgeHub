@@ -40,7 +40,7 @@ export class UpdateItems implements OnInit {
     toleranceJson:'',
     isActive:true
   };
-
+customUom:any;
     loading:boolean=false;  // ⭐ loader state
 
 
@@ -62,7 +62,12 @@ export class UpdateItems implements OnInit {
 
   update(){
         // this.loading = true;
-
+  console.log("Original Selected:", this.item.uom);
+  console.log("Custom Entered:", this.customUom);
+  
+  if (this.item.uom === 'custom' && this.customUom.trim() !== '') {
+    this.item.uom = this.customUom;
+  }
     this.service.updateItem(this.id, this.item).subscribe({
       next:(res)=>{
         console.log("Updated Successfully", res);
