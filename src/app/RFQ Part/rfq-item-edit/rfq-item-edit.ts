@@ -34,7 +34,7 @@ export class RfqItemEdit implements OnInit {
   loading:boolean=false;
   editMode:boolean=false;
 
-item = {
+item : any = {
   itemName: "",
   description: "",
   quantity: 0,
@@ -46,7 +46,8 @@ item = {
   indentLineNo: ""
 };
 
-
+customUom:any;
+  uom: any[] = [];
 
 
 itemId : any;
@@ -64,6 +65,7 @@ itemId : any;
   ngOnInit(){
     this.id = this.route.snapshot.paramMap.get("id");
     this.loadItem();
+
   }
 
   // Load RFQ-Item details first
@@ -75,6 +77,8 @@ itemId : any;
       this.loading=false;
 
       this.loadItemDetails(res.data.itemId); // ⭐ load master item info
+           this.fetching_Uom();
+
       this.cd.detectChanges();
     },err=>{
       this.loading=false;
@@ -91,7 +95,19 @@ itemId : any;
     });
   }
 
+
+  fetching_Uom() {
+  this.itemService.getFiltered({}).subscribe((res:any)=>{
+    const list = res.data.items;
+    this.uom = [...new Set(list.map((x:any) => x.uom))];  // Unique UOMs
+  });
+}
+
+
   updateItem(){
+     if (this.item.uom === 'custom' && this.customUom.trim() !== '') {
+    this.item.uom = this.customUom;
+  }
   this.item.estimatedPrice = this.item.quantity * this.item.perPiecePrice;
   
   console.log(this.item)

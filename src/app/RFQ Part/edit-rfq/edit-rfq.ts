@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RfqSerVice } from '../../../Services/RfqSerVice';
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @Component({
@@ -20,7 +22,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
   MatStepperModule,
   MatButtonModule,
   ReactiveFormsModule,
-  CommonModule
+  CommonModule,
+  MatSelectModule
 ],
   templateUrl:'./edit-rfq.html',
   styleUrls:['./edit-rfq.scss']

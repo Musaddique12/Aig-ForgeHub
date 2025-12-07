@@ -39,7 +39,7 @@ export class RfqItems implements OnInit {
   ){}
 
   rfqId:string="";
-
+customUom:any;
   // Item dropdown list
   itemList:any[]=[];
 
@@ -134,6 +134,9 @@ console.log(this.itemList)
 
   // ADD ITEM TO RFQ
   addItem(){
+     if (this.newItem.uom === 'custom' && this.customUom.trim() !== '') {
+    this.newItem.uom = this.customUom;
+  }
     this.rfqItemService.addRfqItems(this.newItem).subscribe(()=>{
       alert("Item Added");
       this.getItems();
@@ -148,6 +151,9 @@ console.log(this.itemList)
   }
 
   saveEdit(){
+     if (this.newItem.uom === 'custom' && this.customUom.trim() !== '') {
+    this.newItem.uom = this.customUom;
+  }
     this.rfqItemService.updateRfqItem(this.editModeId!,this.editItem).subscribe(()=>{
       alert("Item Updated");
       this.editModeId=null;
