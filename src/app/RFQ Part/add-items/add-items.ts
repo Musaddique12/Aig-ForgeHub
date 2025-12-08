@@ -35,6 +35,7 @@ export class AddItems implements OnInit {
     isActive: true
   };
 
+customUom:any;
   uom: any[] = [];
   data: any;
   query = {}
@@ -46,6 +47,13 @@ export class AddItems implements OnInit {
   }
 
   submit() {
+     // If custom is selected replace final UOM with entered text
+     console.log("Original Selected:", this.item.uom);
+  console.log("Custom Entered:", this.customUom);
+  
+  if (this.item.uom === 'custom' && this.customUom.trim() !== '') {
+    this.item.uom = this.customUom;
+  }
     this.service.addItem(this.item).subscribe({
       next: (res) => {
         console.log("Item Added Successfully", res);

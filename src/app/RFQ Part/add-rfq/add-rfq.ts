@@ -77,7 +77,8 @@ export class AddRfq implements OnInit {
       specifications:[''],
       estimatedPrice:[0],
       requiredDeliveryDate:[''],    // <-- DateOnly format
-      indentLineNo:['']
+      indentLineNo:[''],
+      PerPiecePrice:[0]
     });
 
     // ------------------ STEP3 Vendor ------------------
@@ -86,7 +87,7 @@ export class AddRfq implements OnInit {
       status:['Invited'],
       isAllowedAfterDeadline:[true],
       allowedUntil:[''],
-      allowedBy:[null]
+      allowedBy:['427A92CB-A7F4-4633-98C0-41536D0A04FA']
     });
 
     this.loadItems();
@@ -100,7 +101,7 @@ export class AddRfq implements OnInit {
     }
   )
   }
-
+customUom:any;
     uom: any[] = [];
   data: any;
   query = {}
@@ -158,21 +159,20 @@ export class AddRfq implements OnInit {
   }
 
   // 🔽 When Item selected - autofill fields
-  onItemSelect(event:any){
-    const id = event.target.value;
+ onItemSelect(id: any){
+  this.itemForm.patchValue({ itemId:id });
 
-    this.itemForm.patchValue({ itemId:id });
+  const selected = this.itemsList.find(x=>x.id === id);
 
-    const selected = this.itemsList.find(x=>x.id===id);
-
-    if(selected){
-      this.itemForm.patchValue({
-        itemName:selected.name,
-        uom:selected.uom,
-        description:selected.description
-      });
-    }
+  if(selected){
+    this.itemForm.patchValue({
+      itemName:selected.name ?? "",
+      uom:selected.uom ?? "",
+      description:selected.description ?? ""
+    });
   }
+}
+
 
   
 
@@ -180,15 +180,21 @@ export class AddRfq implements OnInit {
   addItem(){
     if(!this.rfqId) return alert("Create RFQ first!");
 
+     
+
     let body = {...this.itemForm.value, rfqId:this.rfqId};
+
+    if (body.uom=== 'custom' && this.customUom.trim() !== '') {
+    body.uom = this.customUom;
+  }
 
     Object.keys(body).forEach(k => { if(body[k]===""||body[k]==undefined) body[k]=null });
 
     body.quantity = Number(body.quantity);
-    body.estimatedPrice = Number(body.estimatedPrice);
+    body.estimatedPrice = Number(body.quantity * body.PerPiecePrice);
+           console.log(body)
 
     // RequiredDeliveryDate must stay as YYYY-MM-DD
-
     this.rfqItemsService.addRfqItems(body).subscribe({
       next:(res)=>{ 
          this.snack.open("Item Added to RFQ ✔","Close",{
@@ -202,26 +208,24 @@ export class AddRfq implements OnInit {
 
   // 🔽 STEP3: Add Vendor
   addVendor(){
-    if(!this.rfqId) return alert("Create RFQ first!");
+  if(!this.rfqId) return alert("Create RFQ first!");
 
-    let body = {...this.vendorForm.value, rfqId:this.rfqId};
+  let body = {...this.vendorForm.value, rfqId:this.rfqId};
 
-    Object.keys(body).forEach(k => { if(body[k]===""||body[k]==undefined) body[k]=null });
-
-    if(body.allowedUntil){
-      body.allowedUntil = new Date(body.allowedUntil).toISOString();
-    }
-
-    this.rfqVendorService.addRfqVendors(body).subscribe({
-      next:(res)=>{
-         this.snack.open("Vendor Added Successfully ✔","Close",{
-    duration:2500,
-    panelClass:"success-snack"
-  });
-      }
-      ,
-      
-      error:(err)=>console.log("VENDOR ERR:",err.error.errors)
-    })
+  if(body.allowedUntil){
+    body.allowedUntil = new Date(body.allowedUntil).toISOString();
   }
+
+  // Convert to string Guid for backend
+  body.vendorId = body.vendorId?.toString();
+  body.rfqId = body.rfqId?.toString();
+
+  console.log("Sending Body:", body);
+
+  this.rfqVendorService.addRfqVendors(body).subscribe({
+    next:(res)=> this.snack.open("Vendor Added ✔","Close",{duration:2500,panelClass:"success-snack"}),
+    error:(err)=> console.log("Vendor API Error =>",err.error)
+  });
+}
+
 }

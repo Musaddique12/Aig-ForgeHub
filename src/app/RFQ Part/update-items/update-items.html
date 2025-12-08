@@ -35,7 +35,12 @@
             <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
           </mat-select>
         </mat-form-field>
-
+  @if(item.uom === 'custom'){
+        <mat-form-field appearance="outline" >
+          <mat-label>Enter Custom UOM</mat-label>
+          <input matInput [(ngModel)]="customUom">
+        </mat-form-field>
+      }
         <mat-form-field appearance="outline" class="full">
           <mat-label>Specifications</mat-label>
           <input matInput [(ngModel)]="item.specifications">

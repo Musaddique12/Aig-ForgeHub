@@ -59,7 +59,7 @@ export class RfqVendors implements OnInit {
 
   //---------------- Dummy Vendor List (Dropdown) ----------------
   sampleVendors = [
-    { id: "1427A92CB-A7F4-4633-98C0-41536D0A04FA", name: "Vendor A" },
+    { id: "427A92CB-A7F4-4633-98C0-41536D0A04FA", name: "Vendor A" },
     { id: "721B0000-7E22-4BA0-864D-4270BB461162", name: "Vendor B" },
     { id: "93330235-E241-4138-B144-5706773F706A", name: "Vendor C" },
   ];

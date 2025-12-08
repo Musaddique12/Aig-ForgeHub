@@ -44,6 +44,13 @@
           </mat-select>
         </mat-form-field>
 
+        <!-- Custom Input Visible Only When UOM = 'custom' -->
+         @if(item.uom === 'custom'){
+        <mat-form-field appearance="outline" >
+          <mat-label>Enter Custom UOM</mat-label>
+          <input matInput [(ngModel)]="customUom">
+        </mat-form-field>
+      }
         <!-- Specifications -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Specifications</mat-label>

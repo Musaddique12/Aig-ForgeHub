@@ -24,10 +24,18 @@
         <textarea matInput rows="2" [(ngModel)]="rfqForm.value.description"></textarea>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Status</mat-label>
-        <input matInput [(ngModel)]="rfqForm.value.status">
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+  <mat-label>Status</mat-label>
+  <select matNativeControl [(ngModel)]="rfqForm.value.status">
+    <option value="draft">Draft</option>
+    <option value="published">Published</option>
+    <option value="closed">Closed</option>
+    <option value="cancelled">Cancelled</option>
+    <option value="expired">Expired</option>
+    <option value="rejected">Rejected</option>
+  </select>
+</mat-form-field>
+
 
       <mat-form-field appearance="outline">
         <mat-label>Submission Deadline</mat-label>
@@ -44,10 +52,11 @@
         <input matInput [(ngModel)]="rfqForm.value.currencyJson">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline">
         <mat-label>Total Estimated Value</mat-label>
         <input type="number" matInput [(ngModel)]="rfqForm.value.totalEstimatedValue">
-      </mat-form-field>
+      </mat-form-field> -->
+      
     </div>
 
     <div class="step-actions">
@@ -68,7 +77,7 @@
 
       <mat-form-field appearance="outline" class="full">
         <mat-label>Select Item</mat-label>
-        <mat-select [(ngModel)]="itemForm.controls['itemId'].value" (selectionChange)="onItemSelect($event)">
+<mat-select [(ngModel)]="itemForm.value.itemId" (selectionChange)="onItemSelect($event.value)">
           <mat-option value="">-- Select Item --</mat-option>
           <mat-option *ngFor="let i of itemsList" [value]="i.id">{{i.name}} - {{i.itemCode}}</mat-option>
         </mat-select>
@@ -97,10 +106,22 @@
           <mat-option *ngFor="let i of uom" [value]="i">{{ i }}</mat-option>
         </mat-select>
       </mat-form-field>
+@if(itemForm.value.uom === 'custom'){
+        <mat-form-field appearance="outline" >
+          <mat-label>Enter Custom UOM</mat-label>
+          <input matInput [(ngModel)]="customUom">
+        </mat-form-field>
+      }
 
+      
       <mat-form-field appearance="outline">
         <mat-label>Quantity</mat-label>
         <input type="number" matInput [(ngModel)]="itemForm.value.quantity">
+      </mat-form-field>
+
+        <mat-form-field appearance="outline">
+        <mat-label>Per Piece Price</mat-label>
+        <input type="number" matInput [(ngModel)]="itemForm.value.PerPiecePrice">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -110,7 +131,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Estimated Price</mat-label>
-        <input type="number" matInput [(ngModel)]="itemForm.value.estimatedPrice">
+        <input type="number" matInput [value]="itemForm.value.quantity * itemForm.value.PerPiecePrice" disabled>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -123,7 +144,6 @@
         <input matInput [(ngModel)]="itemForm.value.indentLineNo">
       </mat-form-field>
     </div>
-
     <div class="step-actions">
       <button mat-raised-button color="primary" (click)="addItem()">Add Item</button>
       <button mat-flat-button color="accent" matStepperNext>Next</button>
@@ -144,8 +164,8 @@
         <mat-label>Select Vendor</mat-label>
         <mat-select [(ngModel)]="vendorForm.value.vendorId">
           <mat-option value="">-- Select Vendor --</mat-option>
-          <mat-option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor A</mat-option>
-          <mat-option value="1427A92CB-A7F4-4633-98C0-41536D0A04FA">Vendor B</mat-option>
+          <mat-option [value]="'427A92CB-A7F4-4633-98C0-41536D0A04FA'">Vendor A</mat-option>
+          <mat-option [value]="'93330235-E241-4138-B144-5706773F706A'">Vendor B</mat-option>
         </mat-select>
       </mat-form-field>
 
