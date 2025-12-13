@@ -19,7 +19,6 @@ export class RfqSerVice {
     })
     return this.http.get(`${this.url}/all` , {params : params});
   }
-
     addRfq(data:any){
     return this.http.post(`${this.url}/add`,data)
   }

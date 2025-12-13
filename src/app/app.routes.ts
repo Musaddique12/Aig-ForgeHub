@@ -11,6 +11,9 @@ import { ShowRfq } from './RFQ Part/show-rfq/show-rfq';
 import { RfqDetails } from './RFQ Part/rfq-details/rfq-details';
 import { RfqVendors } from './RFQ Part/rfq-vandors/rfq-vandors';
 import { RfqItemEdit } from './RFQ Part/rfq-item-edit/rfq-item-edit';
+import { VendorBidDetails } from './vendor-bid-details/vendor-bid-details';
+import { RfqBidVersions } from './rfq-bid-versions/rfq-bid-versions';
+import { BidHeaderDetails } from './bid-header-details/bid-header-details';
 
 export const routes: Routes = [
     {path:'',redirectTo:'showRfq',pathMatch:'full'},
@@ -21,6 +24,17 @@ export const routes: Routes = [
     {path:'rfqItems',component:RfqItems},
     {path:'addRfq',component:AddRfq},
     {path:'showRfq',component:ShowRfq},
+     {
+    path: 'rfq/:rfqId/vendor/:vendorId/bids',
+    component: VendorBidDetails
+  },
+  {
+  path: 'rfq/:rfqId/bid-versions',
+  component: RfqBidVersions
+},{
+  path: 'bid-header/:id',
+  component: BidHeaderDetails
+},
     { path: "rfq-item/:id", component: RfqItemEdit },
     { path:"rfq-details/:id", loadComponent:()=>import('./RFQ Part/rfq-details/rfq-details').then(m=>m.RfqDetails) },
 { path:"rfq-items/:id", loadComponent:()=>import('./RFQ Part/rfq-items/rfq-items').then(m=>m.RfqItems) },     // Next

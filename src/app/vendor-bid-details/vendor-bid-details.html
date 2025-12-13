@@ -1,0 +1,111 @@
+<div class="page-container">
+
+  <!-- PAGE TITLE -->
+  <h2 class="title">Vendor Bid Details</h2>
+
+  <!-- HEADER CARD -->
+  <mat-card *ngIf="header" class="header-card">
+
+    <mat-card-title class="section-title">Header Information</mat-card-title>
+    <mat-divider></mat-divider>
+
+    <!-- GRID FOR READABILITY -->
+    <div class="info-grid">
+      <div class="info-row">
+        <span class="label">Vendor:</span> {{ header.vendorName }}
+      </div>
+      <div class="info-row">
+        <span class="label">Bid No:</span> {{ header.bidNo }}
+      </div>
+      <div class="info-row">
+        <span class="label">Bid Date:</span> {{ header.bidDate | date }}
+      </div>
+      <div class="info-row">
+        <span class="label">Expiry:</span> {{ header.expiryDate | date }}
+      </div>
+      <div class="info-row">
+        <span class="label">Status:</span> {{ header.status }}
+      </div>
+    </div>
+
+    <br />
+
+    <mat-card-title class="section-title">Contact Details</mat-card-title>
+    <mat-divider></mat-divider>
+
+    <div class="info-grid">
+      <div class="info-row">
+        <span class="label">Person:</span> {{ header.contactPerson }}
+      </div>
+      <div class="info-row">
+        <span class="label">Mobile:</span> {{ header.mobileNo }}
+      </div>
+    </div>
+
+  </mat-card>
+
+  <!-- BID VERSION TABLE -->
+  <mat-card *ngIf="versions.length > 0" class="table-card">
+    <mat-card-title class="section-title">Bid Versions</mat-card-title>
+    <mat-divider></mat-divider>
+
+      <mat-form-field appearance="outline" class="search-box">
+    <mat-label>Search version...</mat-label>
+    <input matInput (keyup)="applyFilter($event)" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 version-table">
+
+  <!-- VERSION -->
+  <ng-container matColumnDef="version">
+    <th mat-header-cell *matHeaderCellDef> Version </th>
+    <td mat-cell *matCellDef="let row"> {{ row.version }} </td>
+  </ng-container>
+
+  <!-- OFFERED PRICE -->
+  <ng-container matColumnDef="offeredPrice">
+    <th mat-header-cell *matHeaderCellDef> Offered Price </th>
+    <td mat-cell *matCellDef="let row"> {{ row.offeredPrice }} </td>
+  </ng-container>
+
+  <!-- NEGOTIATED -->
+  <ng-container matColumnDef="negotiatedPrice">
+    <th mat-header-cell *matHeaderCellDef> Negotiated </th>
+    <td mat-cell *matCellDef="let row"> {{ row.negotiatedPrice }} </td>
+  </ng-container>
+
+  <!-- DISCOUNT -->
+  <ng-container matColumnDef="discount">
+    <th mat-header-cell *matHeaderCellDef> Discount % </th>
+    <td mat-cell *matCellDef="let row"> {{ row.negotiatedDiscountPercentage }} </td>
+  </ng-container>
+
+  <!-- FREIGHT -->
+  <ng-container matColumnDef="freight">
+    <th mat-header-cell *matHeaderCellDef> Freight </th>
+    <td mat-cell *matCellDef="let row"> {{ row.negotiatedFreightCharges }} </td>
+  </ng-container>
+
+  <!-- LANDED COST -->
+  <ng-container matColumnDef="landed">
+    <th mat-header-cell *matHeaderCellDef> Landed Cost </th>
+    <td mat-cell *matCellDef="let row"> {{ row.negotiatedNetLandedCost }} </td>
+  </ng-container>
+
+  <!-- HEADER -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <!-- ROW -->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+
+
+  </mat-card>
+<!-- PAGINATOR -->
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+</mat-paginator>
+</div>

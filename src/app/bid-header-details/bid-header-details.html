@@ -1,0 +1,71 @@
+<div class="details-container" *ngIf="header">
+
+  <mat-card class="header-card mat-elevation-z8">
+
+    <mat-card-header>
+      <mat-card-title>Bid Header Details</mat-card-title>
+      <mat-card-subtitle>{{ header.vendorName }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+      <!-- BASIC DETAILS -->
+      <div class="section">
+        <h3 class="section-title">Basic Information</h3>
+
+        <div class="grid">
+          <div><strong>Bid No:</strong> {{ header.bidNo }}</div>
+          <div><strong>Bid Date:</strong> {{ header.bidDate | date:'mediumDate' }}</div>
+          <div><strong>Status:</strong> 
+            <span class="status-pill {{ header.status }}">
+              {{ header.status | titlecase }}
+            </span>
+          </div>
+          <div><strong>Factory Code:</strong> {{ header.factoryCode }}</div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- CONTACT DETAILS -->
+      <div class="section">
+        <h3 class="section-title">Contact</h3>
+
+        <div class="grid">
+          <div><strong>Contact Person:</strong> {{ header.contactPerson }}</div>
+          <div><strong>Mobile:</strong> {{ header.mobileNo }}</div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- COMMERCIAL TERMS -->
+      <div class="section">
+        <h3 class="section-title">Commercial Terms</h3>
+
+        <div class="grid">
+          <div><strong>Payment Terms:</strong> {{ header.paymentTermsJson }}</div>
+          <div><strong>Delivery Period:</strong> {{ header.deliveryPeriod }}</div>
+          <div><strong>GST:</strong> {{ header.gstPercentage }}%</div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- FINANCIAL DETAILS -->
+      <div class="section">
+        <h3 class="section-title">Financial Details</h3>
+
+        <div class="grid">
+          <div><strong>Packing Charges:</strong> ₹ {{ header.packingChargesAmount }}</div>
+          <div><strong>Freight Amount:</strong> ₹ {{ header.freightAmount }}</div>
+        </div>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

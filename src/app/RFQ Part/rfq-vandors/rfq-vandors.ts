@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RfqVendorService } from '../../../Services/rfq-vendor-service';
 
 import { MatCardModule } from "@angular/material/card";
@@ -33,7 +33,9 @@ export class RfqVendors implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: RfqVendorService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+      private router: Router         // ✅ added
+
   ) { }
 
   rfqId: string = "";
@@ -133,6 +135,17 @@ onPageChange(event: PageEvent) {
   this.pagenumber = event.pageIndex + 1;
   this.pageSize = event.pageSize;
   this.loadVendors();
+}
+
+
+goToBidDetails(vendorId: string) {
+  this.router.navigate([
+    '/rfq',
+    this.rfqId,
+    'vendor',
+    vendorId,
+    'bids'
+  ]);
 }
 
 

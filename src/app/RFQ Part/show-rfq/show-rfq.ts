@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { RfqSerVice } from '../../../Services/RfqSerVice';
 
 import { MatTableModule } from '@angular/material/table';
@@ -25,7 +25,9 @@ import { MatButtonModule } from '@angular/material/button';
   MatTableModule,
   MatButtonModule,
   MatIconModule,
-  MatPaginatorModule],
+  MatPaginatorModule,
+  RouterModule,        // ✅ REQUIRED FOR routerLink
+],
   templateUrl:'./show-rfq.html',
   styleUrls:['./show-rfq.scss']
 })
